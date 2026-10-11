@@ -1,0 +1,10 @@
+{
+  "pre-commit": {
+    "commands": {
+      "lint": {
+        "run": "pnpm lint --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}",
+        "stage_fixed": true
+      }
+    }
+  }
+}

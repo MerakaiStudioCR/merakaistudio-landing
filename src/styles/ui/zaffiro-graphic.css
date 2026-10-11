@@ -1,0 +1,75 @@
+/**
+ * Zaffiro graphic language — facets, brand rules, dividers (Phase 5).
+ * Source: docs/zaffiro-brand-identity.md §20–21
+ */
+
+@layer components {
+  .zaffiro-facet-bg {
+    background-color: var(--light-background);
+    background-image:
+      radial-gradient(circle at 100% 0%, rgb(21 82 182 / 5%) 0%, transparent 40%),
+      radial-gradient(circle at 0% 100%, rgb(213 164 50 / 4%) 0%, transparent 36%),
+      var(--zaffiro-facet-pattern);
+    background-size:
+      auto,
+      auto,
+      120px 120px;
+  }
+
+  .zaffiro-brand-rule {
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: 3px;
+    border-radius: 9999px;
+    background: var(--zaffiro-brand-rule-gradient);
+  }
+
+  .zaffiro-brand-rule--wide {
+    width: min(100%, 12rem);
+  }
+
+  .zaffiro-section-divider {
+    height: 1px;
+    border: 0;
+    background: var(--zaffiro-section-divider-gradient);
+  }
+
+  .zaffiro-empty-panel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 36rem;
+    border: 1px solid var(--border);
+    border-radius: var(--zaffiro-radius-lg);
+    background: color-mix(in srgb, var(--light-background) 94%, white);
+    padding: 2.5rem 1.5rem;
+    box-shadow:
+      0 1px 2px rgb(6 27 69 / 4%),
+      0 8px 24px rgb(6 27 69 / 4%);
+  }
+
+  .zaffiro-empty-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--zaffiro-facet-pattern);
+    background-size: 120px 120px;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .zaffiro-empty-panel > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .zaffiro-selection-shell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    min-height: calc(100vh - var(--top-nav-height));
+    width: 100%;
+  }
+}

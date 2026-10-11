@@ -1,0 +1,226 @@
+/**
+ * App shell — shared layout surfaces (sidebar, top nav, secondary nav).
+ */
+.brand-sidebar-shell {
+  background: linear-gradient(
+    180deg,
+    var(--zaffiro-sapphire-800) 0%,
+    var(--zaffiro-sapphire-700) 100%
+  );
+  border-right: 1px solid var(--sidebar-border);
+}
+
+.brand-sidebar-shell [data-sidebar='menu-button'],
+.brand-sidebar-shell [data-sidebar='menu-sub-button'] {
+  color: var(--sidebar-muted-foreground);
+  transition:
+    background 0.2s var(--zaffiro-ease-out),
+    color 0.2s var(--zaffiro-ease-out),
+    box-shadow 0.2s var(--zaffiro-ease-out);
+}
+
+.brand-sidebar-shell [data-sidebar='menu-button']:hover,
+.brand-sidebar-shell [data-sidebar='menu-sub-button']:hover {
+  background: rgb(255 255 255 / 10%);
+  color: var(--sidebar-foreground);
+}
+
+.brand-sidebar-shell [data-sidebar='menu-button'][data-active='true'],
+.brand-sidebar-shell [data-sidebar='menu-sub-button'][data-active='true'] {
+  background: var(--sidebar-accent);
+  box-shadow: inset 3px 0 0 var(--accent-cta);
+  color: var(--sidebar-accent-foreground);
+  font-weight: 600;
+}
+
+.brand-sidebar-shell [data-sidebar='menu-sub'] {
+  border-color: rgb(255 255 255 / 14%);
+}
+
+[data-slot='sidebar-mobile'] > button {
+  border-color: rgb(255 255 255 / 35%);
+  background: rgb(255 255 255 / 12%);
+  color: var(--zaffiro-white);
+  box-shadow: none;
+}
+
+[data-slot='sidebar-mobile'] > button:hover {
+  border-color: rgb(255 255 255 / 55%);
+  background: rgb(255 255 255 / 20%);
+  color: var(--zaffiro-white);
+}
+
+.shell-top-nav {
+  border-bottom: 1px solid var(--border);
+  background-color: var(--top-nav-background);
+  box-shadow:
+    0 1px 2px rgb(6 27 69 / 4%),
+    0 4px 14px rgb(6 27 69 / 3%);
+}
+
+.shell-page {
+  background: var(--light-background);
+}
+
+.shell-subnav {
+  border-bottom: 1px solid var(--border);
+  background: var(--background);
+}
+
+.shell-subnav-tab {
+  border-bottom: 2px solid transparent;
+  padding: 0.75rem 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    color 0.2s var(--zaffiro-ease-out),
+    border-color 0.2s var(--zaffiro-ease-out);
+}
+
+.shell-subnav-tab:hover {
+  border-bottom-color: color-mix(in srgb, var(--border) 80%, var(--zaffiro-royal-600));
+  color: var(--foreground);
+}
+
+.shell-subnav-tab--active {
+  border-bottom-color: var(--primary);
+  color: var(--primary);
+}
+
+.shell-settings-aside {
+  display: none;
+  width: 16rem;
+  flex-shrink: 0;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  background: color-mix(in srgb, var(--light-background) 92%, white);
+  padding-top: 1.5rem;
+
+  @media (min-width: 1024px) {
+    display: flex;
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+.shell-settings-mobile {
+  position: sticky;
+  top: var(--top-nav-height);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--light-background) 92%, white);
+  padding: 0.75rem 1rem 1rem;
+
+  @media (min-width: 1024px) {
+    display: none;
+  }
+}
+
+.shell-settings-mobile-trigger {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--accent-interaction) 45%, var(--border));
+  border-radius: 0.5rem;
+  background: var(--background);
+  padding: 0.625rem 0.75rem;
+  color: var(--primary);
+  box-shadow: 0 1px 2px rgb(6 27 69 / 4%);
+  text-align: left;
+  transition:
+    background 0.2s var(--zaffiro-ease-out),
+    border-color 0.2s var(--zaffiro-ease-out);
+}
+
+.shell-settings-mobile-trigger:hover {
+  border-color: var(--accent-interaction);
+  background: var(--zaffiro-water-100);
+}
+
+.shell-settings-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--accent-interaction);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s var(--zaffiro-ease-out);
+}
+
+.shell-settings-back:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.shell-settings-title {
+  margin-top: 1.25rem;
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.shell-settings-group-label {
+  margin-bottom: 0.5rem;
+  padding-inline: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.shell-settings-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition:
+    background 0.2s var(--zaffiro-ease-out),
+    color 0.2s var(--zaffiro-ease-out);
+}
+
+.shell-settings-link:hover {
+  background: var(--zaffiro-water-100);
+  color: var(--primary);
+}
+
+.shell-settings-link--active {
+  background: color-mix(in srgb, var(--zaffiro-water-100) 80%, white);
+  color: var(--primary);
+  box-shadow: inset 3px 0 0 var(--accent-cta);
+}
+
+.shell-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--accent-interaction);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s var(--zaffiro-ease-out);
+}
+
+.shell-back-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.shell-main-surface {
+  position: relative;
+  min-width: 0;
+  flex: 1;
+  overflow: auto;
+  background: var(--background);
+}

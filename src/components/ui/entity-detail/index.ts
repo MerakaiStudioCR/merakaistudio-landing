@@ -1,0 +1,8 @@
+export { default as EntityDetailBody } from '~/components/ui/entity-detail/entity-detail-body'
+export { default as EntityDetailPageLayout } from '~/components/ui/entity-detail/entity-detail-page-layout'
+export { default as EntityDetailSubsection } from '~/components/ui/entity-detail/entity-detail-subsection'
+export { default as EntityDetailSummary } from '~/components/ui/entity-detail/entity-detail-summary'
+export { default as SummaryStat } from '~/components/ui/entity-detail/summary-stat'
+export type { EntityDetailSubsectionProps } from '~/components/ui/entity-detail/entity-detail-subsection'
+export type { EntityDetailSummaryProps } from '~/components/ui/entity-detail/entity-detail-summary'
+export type { SummaryStatProps } from '~/components/ui/entity-detail/summary-stat'

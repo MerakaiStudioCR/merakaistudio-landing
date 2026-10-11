@@ -1,0 +1,848 @@
+@keyframes merakai-in {
+  from {
+    opacity: 0.42;
+    transform: translate3d(0, 28px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes merakai-pan {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-48px, -48px, 0);
+  }
+}
+
+@keyframes merakai-scan {
+  from {
+    transform: translate3d(-30%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(130%, 0, 0);
+  }
+}
+
+@keyframes merakai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes merakai-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes merakai-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes merakai-assemble {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes merakai-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes merakai-line {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.merakai-grid,
+.merakai-scan,
+.merakai-orbit,
+.merakai-node {
+  pointer-events: none;
+}
+
+.merakai-grid {
+  position: absolute;
+  inset: -30%;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-merakai-navy) 9%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-merakai-navy) 9%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 72% 42%, #000 10%, transparent 68%);
+  animation: merakai-pan 28s linear infinite;
+}
+
+.merakai-scan {
+  position: absolute;
+  top: 46%;
+  left: 0;
+  z-index: 2;
+  height: 1px;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, var(--color-merakai-orange), transparent);
+  opacity: 0.7;
+  animation: merakai-scan 7.5s linear infinite;
+}
+
+.merakai-stage {
+  position: relative;
+  min-height: 22rem;
+}
+
+.merakai-orbit {
+  position: absolute;
+  top: 8%;
+  right: 4%;
+  height: 18rem;
+  width: 18rem;
+  border: 1px solid color-mix(in srgb, var(--color-merakai-navy) 16%, transparent);
+  border-radius: 999px;
+  animation: merakai-spin 28s linear infinite;
+}
+
+.merakai-orbit--inner {
+  top: 18%;
+  right: 12%;
+  height: 11rem;
+  width: 11rem;
+  border-color: color-mix(in srgb, var(--color-merakai-orange) 55%, transparent);
+  animation-duration: 18s;
+  animation-direction: reverse;
+}
+
+.merakai-node {
+  position: absolute;
+  height: 8px;
+  width: 8px;
+  background: var(--color-merakai-orange);
+  animation: merakai-pulse 3.2s ease-in-out infinite;
+}
+
+.merakai-node--a {
+  top: 14%;
+  right: 18%;
+}
+
+.merakai-node--b {
+  right: 8%;
+  bottom: 22%;
+  background: var(--color-merakai-mint);
+  animation-delay: 0.8s;
+}
+
+.merakai-node--c {
+  top: 46%;
+  right: 42%;
+  background: var(--color-merakai-navy);
+  animation-delay: 1.4s;
+}
+
+.merakai-stage .merakai-mark {
+  position: relative;
+  z-index: 1;
+}
+
+.merakai-stage .merakai-mark path {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: merakai-assemble 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.merakai-stage .merakai-mark path:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.merakai-stage .merakai-mark path:nth-child(3) {
+  animation:
+    merakai-assemble 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both,
+    merakai-float 6s ease-in-out 1.2s infinite;
+}
+
+.merakai-hero-copy > * {
+  animation: merakai-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.merakai-hero-copy > *:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.merakai-hero-copy > *:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.merakai-hero-copy > *:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.merakai-ticker {
+  overflow: hidden;
+  padding-bottom: 3rem;
+  border-block: 1px solid color-mix(in srgb, var(--color-merakai-navy) 12%, transparent);
+  background: var(--color-merakai-paper);
+}
+
+.merakai-ticker__track {
+  display: flex;
+  width: max-content;
+  animation: merakai-marquee 32s linear infinite;
+}
+
+.merakai-ticker:hover .merakai-ticker__track {
+  animation-play-state: paused;
+}
+
+.merakai-ticker__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.9rem 1.25rem;
+  color: var(--color-merakai-navy);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.merakai-ticker__item::before {
+  content: '';
+  height: 6px;
+  width: 6px;
+  background: var(--color-merakai-orange);
+}
+
+@supports (animation-timeline: view()) {
+  .merakai-in {
+    animation: merakai-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+  }
+}
+
+.merakai-steps {
+  position: relative;
+}
+
+.merakai-steps::before {
+  content: '';
+  position: absolute;
+  top: 1.7rem;
+  right: 8%;
+  left: 0;
+  height: 1px;
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    var(--color-merakai-orange),
+    color-mix(in srgb, var(--color-merakai-navy) 20%, transparent)
+  );
+}
+
+.merakai-cell {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s ease;
+}
+
+.merakai-cell:hover {
+  transform: translate3d(0, -4px, 0);
+  background: var(--color-merakai-gray);
+}
+
+.merakai-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.merakai-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.merakai-panel::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  height: 96px;
+  width: 96px;
+  background: var(--color-merakai-orange);
+  transform: rotate(45deg);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.merakai-panel:hover::after {
+  transform: rotate(45deg) translate3d(-8px, -8px, 0) scale(1.15);
+}
+
+.merakai-action {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.merakai-action:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.merakai-nav-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition:
+    background-size 0.3s ease,
+    color 0.3s ease;
+}
+
+.merakai-nav-link:hover,
+.merakai-nav-link[aria-current='page'] {
+  background-size: 100% 1px;
+}
+
+.studio-scene {
+  color: var(--color-merakai-navy);
+}
+
+.studio-scene--paper {
+  color: var(--color-merakai-paper);
+}
+
+.studio-scene__wash {
+  fill: currentColor;
+  opacity: 0.08;
+}
+
+.studio-scene__ink {
+  fill: currentColor;
+}
+
+.studio-scene__soft {
+  fill: currentColor;
+  opacity: 0.28;
+}
+
+.studio-scene__paper {
+  fill: var(--color-merakai-paper);
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.studio-scene__line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.studio-scene__accent {
+  fill: var(--color-merakai-orange);
+}
+
+.studio-scene__beam {
+  fill: var(--color-merakai-orange);
+  opacity: 0.22;
+}
+
+.studio-scene--paper .studio-scene__paper {
+  fill: transparent;
+}
+
+.merakai-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.merakai-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 18%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-merakai-orange) 35%, transparent),
+    transparent
+  );
+  animation: merakai-scan 8s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .merakai-steps::before,
+  .merakai-orbit,
+  .merakai-node--c {
+    display: none;
+  }
+}
+
+@keyframes merakai-handoff {
+  to {
+    transform: translate3d(4%, -10%, 0) scale(0.76);
+  }
+}
+
+@keyframes merakai-pillar {
+  from {
+    opacity: 0.32;
+    transform: translate3d(1.25rem, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes merakai-draw {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes merakai-open-fold {
+  from {
+    transform: translate3d(0.75rem, -0.75rem, 0) scale(0.96);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes merakai-from-left {
+  from {
+    transform: translate3d(-2rem, 1rem, 0);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes merakai-from-right {
+  from {
+    transform: translate3d(2rem, 1rem, 0);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes merakai-show {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes merakai-seam {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.merakai-fold,
+.merakai-rise {
+  position: relative;
+  z-index: 2;
+}
+
+.merakai-fold::before,
+.merakai-rise::after {
+  content: '';
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  left: 0;
+  height: 3rem;
+  transform-origin: bottom center;
+  pointer-events: none;
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+
+.merakai-fold::before {
+  z-index: 1;
+  background: var(--color-merakai-paper);
+}
+
+.merakai-fold::after {
+  content: '';
+  position: absolute;
+  top: -2.7rem;
+  right: 0;
+  left: 0;
+  height: 2.7rem;
+  transform-origin: bottom center;
+  pointer-events: none;
+  background: var(--color-merakai-orange);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+
+.merakai-philosophy.merakai-fold::before {
+  background: var(--color-merakai-gray);
+}
+
+@media (min-width: 1024px) {
+  .merakai-fold--aside::before,
+  .merakai-fold--aside::after {
+    content: none;
+  }
+}
+
+.merakai-rise {
+  z-index: 3;
+}
+
+.merakai-cta.merakai-rise {
+  overflow: visible;
+}
+
+.merakai-rise::after {
+  background: var(--color-merakai-navy);
+}
+
+.merakai-pillars {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.merakai-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  transform-origin: top center;
+  background: var(--color-merakai-orange);
+}
+
+.merakai-products {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.merakai-products__pair {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.merakai-bridge {
+  display: none;
+}
+
+.merakai-step-index {
+  position: relative;
+  display: inline-block;
+  color: color-mix(in srgb, var(--color-merakai-navy) 28%, transparent);
+}
+
+.merakai-step-index__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--color-merakai-orange);
+  opacity: 0.8;
+}
+
+@supports (animation-timeline: view()) {
+  .merakai-fold::before,
+  .merakai-fold::after,
+  .merakai-rise::after {
+    animation: merakai-seam linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 22%;
+  }
+
+  .merakai-pillar {
+    animation: merakai-pillar linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 32%;
+  }
+
+  .merakai-pillar:nth-child(2) {
+    animation-range: entry 8% cover 40%;
+  }
+
+  .merakai-pillar:nth-child(3) {
+    animation-range: entry 16% cover 48%;
+  }
+
+  .merakai-rail,
+  .merakai-steps::before,
+  .merakai-bridge {
+    animation: merakai-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 60%;
+  }
+
+  .merakai-steps::before,
+  .merakai-bridge {
+    animation-name: merakai-line;
+  }
+
+  .merakai-from-fold,
+  .merakai-from-left,
+  .merakai-from-right {
+    animation: merakai-open-fold linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 34%;
+  }
+
+  .merakai-from-fold {
+    transform-origin: top right;
+  }
+
+  .merakai-from-left {
+    animation-name: merakai-from-left;
+    animation-range: entry 6% cover 40%;
+  }
+
+  .merakai-from-right {
+    animation-name: merakai-from-right;
+    animation-range: entry 12% cover 46%;
+  }
+
+  .merakai-cell:nth-child(1) {
+    animation: merakai-in linear both;
+    animation-timeline: view();
+    animation-range: entry 6% cover 28%;
+  }
+
+  .merakai-cell:nth-child(2) {
+    animation: merakai-in linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 32%;
+  }
+
+  .merakai-cell:nth-child(3) {
+    animation: merakai-in linear both;
+    animation-timeline: view();
+    animation-range: entry 14% cover 36%;
+  }
+
+  .merakai-cell:nth-child(4) {
+    animation: merakai-in linear both;
+    animation-timeline: view();
+    animation-range: entry 12% cover 34%;
+  }
+
+  .merakai-cell:nth-child(5) {
+    animation: merakai-in linear both;
+    animation-timeline: view();
+    animation-range: entry 16% cover 38%;
+  }
+
+  .merakai-cell:nth-child(6) {
+    animation: merakai-in linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 42%;
+  }
+
+  .merakai-step-index__fill {
+    opacity: 0;
+    animation: merakai-show linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  .merakai-step:nth-child(2) .merakai-step-index__fill {
+    animation-range: entry 8% cover 38%;
+  }
+
+  .merakai-step:nth-child(3) .merakai-step-index__fill {
+    animation-range: entry 16% cover 46%;
+  }
+
+  .merakai-step:nth-child(4) .merakai-step-index__fill {
+    animation-range: entry 24% cover 54%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .merakai-products__pair {
+    grid-template-columns: 5fr 7fr;
+  }
+
+  .merakai-bridge {
+    position: absolute;
+    top: 42%;
+    left: calc((100% - 1.25rem) * 5 / 12);
+    z-index: 3;
+    display: block;
+    width: 1.25rem;
+    height: 2px;
+    transform-origin: left center;
+    background: var(--color-merakai-orange);
+    pointer-events: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 1024px) {
+    .merakai-hero {
+      height: 145vh;
+      view-timeline-name: --hero;
+    }
+
+    .merakai-hero__pin {
+      position: sticky;
+      top: 5rem;
+    }
+
+    .merakai-hero .merakai-stage {
+      transform-origin: top right;
+      animation: merakai-handoff linear both;
+      animation-timeline: --hero;
+      animation-range: contain 20% contain 75%;
+    }
+
+    .merakai-philosophy {
+      height: 210vh;
+      view-timeline-name: --philosophy;
+    }
+
+    .merakai-philosophy__pin {
+      position: sticky;
+      top: 5.5rem;
+    }
+
+    .merakai-method {
+      height: 170vh;
+      view-timeline-name: --method;
+    }
+
+    .merakai-method__pin {
+      position: sticky;
+      top: 5.5rem;
+    }
+
+    .merakai-pillar,
+    .merakai-rail {
+      animation-timeline: --philosophy;
+    }
+
+    .merakai-pillar:nth-child(1) {
+      animation-range: contain 0% contain 34%;
+    }
+
+    .merakai-pillar:nth-child(2) {
+      animation-range: contain 28% contain 62%;
+    }
+
+    .merakai-pillar:nth-child(3) {
+      animation-range: contain 56% contain 90%;
+    }
+
+    .merakai-rail {
+      animation-range: contain 0% contain 88%;
+    }
+
+    .merakai-steps::before,
+    .merakai-step-index__fill {
+      animation-timeline: --method;
+    }
+
+    .merakai-steps::before {
+      animation-range: contain 8% contain 82%;
+    }
+
+    .merakai-step:nth-child(1) .merakai-step-index__fill {
+      animation-range: contain 8% contain 28%;
+    }
+
+    .merakai-step:nth-child(2) .merakai-step-index__fill {
+      animation-range: contain 26% contain 46%;
+    }
+
+    .merakai-step:nth-child(3) .merakai-step-index__fill {
+      animation-range: contain 44% contain 64%;
+    }
+
+    .merakai-step:nth-child(4) .merakai-step-index__fill {
+      animation-range: contain 62% contain 82%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .merakai-site *,
+  .merakai-site *::before,
+  .merakai-site *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .merakai-hero,
+  .merakai-philosophy,
+  .merakai-method {
+    height: auto !important;
+  }
+
+  .merakai-hero__pin,
+  .merakai-philosophy__pin,
+  .merakai-method__pin {
+    position: static !important;
+  }
+
+  .merakai-step-index__fill,
+  .merakai-pillar,
+  .merakai-from-fold,
+  .merakai-from-left,
+  .merakai-from-right {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

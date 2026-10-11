@@ -1,0 +1,70 @@
+/**
+ * Zaffiro UI kit — shared component surfaces (Phase 2).
+ * Consumes tokens from zaffiro-brand.css only.
+ */
+
+@layer components {
+  .zaffiro-card {
+    @apply relative w-full overflow-hidden rounded-[var(--zaffiro-radius-lg)] border border-border bg-light-background shadow-sm;
+  }
+
+  .zaffiro-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    border-radius: var(--zaffiro-radius-lg) var(--zaffiro-radius-lg) 0 0;
+    background: var(--zaffiro-card-accent-gradient);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .floating-section {
+    @apply relative flex w-full flex-col gap-4 overflow-hidden rounded-[var(--zaffiro-radius-lg)] border border-border bg-light-background p-4 shadow-sm lg:p-6;
+  }
+
+  .floating-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    border-radius: var(--zaffiro-radius-lg) var(--zaffiro-radius-lg) 0 0;
+    background: var(--zaffiro-card-accent-gradient);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .floating-section .field-set {
+    @apply flex flex-col gap-6 lg:flex-row;
+  }
+}
+
+@layer base {
+  [data-sonner-toast][data-type='success'] {
+    border-color: color-mix(in srgb, var(--success) 35%, transparent);
+    background: color-mix(in srgb, var(--success) 10%, white);
+    color: var(--foreground);
+  }
+
+  [data-sonner-toast][data-type='error'] {
+    border-color: color-mix(in srgb, var(--destructive) 35%, transparent);
+    background: color-mix(in srgb, var(--destructive) 10%, white);
+    color: var(--foreground);
+  }
+
+  [data-sonner-toast][data-type='warning'] {
+    border-color: color-mix(in srgb, var(--warning) 35%, transparent);
+    background: color-mix(in srgb, var(--warning) 12%, white);
+    color: var(--foreground);
+  }
+
+  [data-sonner-toast][data-type='info'] {
+    border-color: color-mix(in srgb, var(--info) 35%, transparent);
+    background: color-mix(in srgb, var(--info) 10%, white);
+    color: var(--foreground);
+  }
+}

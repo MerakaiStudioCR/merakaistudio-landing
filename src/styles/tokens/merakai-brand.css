@@ -1,0 +1,154 @@
+.merakai-site {
+  background: var(--color-merakai-paper);
+  color: var(--color-merakai-navy);
+  --font-heading: var(--font-manrope), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+}
+
+.merakai-site h1,
+.merakai-site h2,
+.merakai-site h3,
+.merakai-site h4,
+.merakai-site h5,
+.merakai-site h6 {
+  color: inherit;
+  font-weight: 600;
+}
+
+.merakai-site :focus-visible {
+  outline: 2px solid var(--color-merakai-orange);
+  outline-offset: 3px;
+}
+
+.merakai-product {
+  color: var(--color-merakai-navy);
+}
+
+.merakai-product--zaffiro {
+  --color-merakai-navy: #082b68;
+  --color-merakai-orange: #7a5c10;
+  --color-merakai-gray: #f5f8fa;
+  --color-merakai-on-accent: #082b68;
+  --color-merakai-accent-fill: #d5a432;
+}
+
+.merakai-product--kizvna {
+  --color-merakai-navy: #2c2820;
+  --color-merakai-orange: #5e5840;
+  --color-merakai-gray: #f4f1ea;
+  --color-merakai-on-accent: #2c2820;
+  --color-merakai-accent-fill: #bfb78f;
+}
+
+.merakai-product--vytal {
+  --color-merakai-navy: #14332e;
+  --color-merakai-orange: #1a5c50;
+  --color-merakai-gray: #f2f7f6;
+  --color-merakai-on-accent: #14332e;
+  --color-merakai-accent-fill: #8fc1b5;
+}
+
+.merakai-product-action {
+  background: var(--color-merakai-accent-fill, var(--color-merakai-orange));
+  color: var(--color-merakai-on-accent, var(--color-merakai-navy));
+}
+
+.merakai-product .text-merakai-orange,
+.merakai-product .hover\:text-merakai-orange:hover {
+  color: var(--color-merakai-orange);
+}
+
+.merakai-product .bg-merakai-navy {
+  background-color: var(--color-merakai-navy);
+}
+
+.merakai-product .bg-merakai-gray {
+  background-color: var(--color-merakai-gray);
+}
+
+.merakai-product .bg-merakai-navy\/10 {
+  background-color: color-mix(in srgb, var(--color-merakai-navy) 10%, transparent);
+}
+
+.merakai-product .text-merakai-navy\/60 {
+  color: color-mix(in srgb, var(--color-merakai-navy) 60%, transparent);
+}
+
+.merakai-product .text-merakai-navy\/75 {
+  color: color-mix(in srgb, var(--color-merakai-navy) 75%, transparent);
+}
+
+.merakai-product .text-merakai-navy\/80 {
+  color: color-mix(in srgb, var(--color-merakai-navy) 80%, transparent);
+}
+
+.merakai-product .border-merakai-orange,
+.merakai-product .hover\:border-merakai-orange:hover {
+  border-color: var(--color-merakai-orange);
+}
+
+.merakai-product .border-merakai-navy\/10 {
+  border-color: color-mix(in srgb, var(--color-merakai-navy) 10%, transparent);
+}
+
+.kizvna-studio {
+  --kz-ink: #14120f;
+  --kz-sand: #d7c7a1;
+  --kz-paper: #f6f1e8;
+  --kz-mist: #8d8474;
+  background: var(--kz-paper);
+  color: var(--kz-ink);
+}
+
+.kizvna-open,
+.kizvna-statement,
+.kizvna-trust {
+  background: var(--kz-ink);
+  color: var(--kz-paper);
+}
+
+.kizvna-kicker {
+  color: var(--kz-sand);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.kizvna-line {
+  max-width: 36rem;
+  color: var(--kz-sand);
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  line-height: 1.45;
+}
+
+.kizvna-name {
+  margin-top: 1.5rem;
+  color: var(--kz-paper);
+  font-family: var(--font-heading);
+  font-size: clamp(4.8rem, 16vw, 11rem);
+  font-weight: 600;
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+}
+
+.kizvna-muted {
+  color: color-mix(in srgb, var(--kz-paper) 72%, transparent);
+}
+
+.kizvna-invite {
+  background: var(--kz-sand);
+  color: var(--kz-ink);
+}
+
+.kizvna-invite__action {
+  background: var(--kz-ink);
+  color: var(--kz-paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .merakai-site .motion-safe {
+    animation: none;
+    transition: none;
+  }
+}

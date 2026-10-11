@@ -1,0 +1,33 @@
+@layer components {
+  button.sky-gradient:hover,
+  button.flat-primary:hover {
+    background: var(--primary-hover) !important;
+  }
+
+  button.sky-gradient[role='switch'] {
+    &[data-state='unchecked'] {
+      background: var(--zaffiro-mist) !important;
+    }
+
+    &[data-state='checked'] {
+      background: var(--primary) !important;
+    }
+  }
+
+  button.danger-gradient:hover {
+    background: color-mix(in srgb, var(--destructive) 85%, black) !important;
+  }
+
+  button.emerald-gradient-border:hover {
+    background: var(--success) !important;
+    color: var(--light-foreground) !important;
+  }
+
+  button.flat-primary {
+    background: var(--primary) !important;
+
+    &:hover {
+      background: var(--primary-hover) !important;
+    }
+  }
+}

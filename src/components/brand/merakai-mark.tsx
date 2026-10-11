@@ -1,0 +1,31 @@
+interface MarkProps {
+  className?: string
+  title?: string
+}
+
+const MerakaiMark = ({ className, title }: MarkProps) => {
+  return (
+    <svg
+      viewBox='0 0 279.61 275.82'
+      className={className}
+      role={title ? 'img' : 'presentation'}
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+    >
+      <path
+        className='fill-current'
+        d='M52.19,223.05h43.78c4.55,0,8.23-3.69,8.23-8.23v-98.6c0-1.95-.69-3.84-1.96-5.33l-43.78-51.5c-4.96-5.84-14.51-2.33-14.51,5.33v150.1c0,4.55,3.69,8.23,8.23,8.23Z'
+      />
+      <path
+        className='fill-current'
+        d='M224.47,50.77v43.78c0,4.55-3.69,8.23-8.23,8.23h-98.6c-1.95,0-3.84-.69-5.33-1.96l-51.5-43.78c-5.84-4.96-2.33-14.51,5.33-14.51h150.1c4.55,0,8.23,3.69,8.23,8.23Z'
+      />
+      <path
+        fill='#F57F20'
+        d='M231.03,144.41l-18.21-18.21c-2-2-4.63-3.27-7.44-3.58l-76-8.44c-7.95-.88-14.66,5.83-13.78,13.78l8.44,76c.31,2.82,1.57,5.44,3.58,7.44l18.21,18.21c7.86,7.86,21.3,2.29,21.3-8.82v-42.6c0-6.89,5.59-12.48,12.48-12.48h42.6c11.12,0,16.68-13.44,8.82-21.3h0Z'
+      />
+    </svg>
+  )
+}
+
+export default MerakaiMark

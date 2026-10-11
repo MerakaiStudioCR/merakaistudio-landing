@@ -1,0 +1,226 @@
+.brand-mark-loader {
+  display: grid;
+  place-items: center;
+  margin: 0;
+}
+
+.brand-mark-loader--page {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  width: auto;
+  height: auto;
+  max-width: none;
+}
+
+.brand-mark-loader--page-viewport {
+  position: fixed;
+  z-index: 100;
+}
+
+.brand-mark-loader--section {
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: 100%;
+  min-height: 16rem;
+  padding-block: 1.5rem;
+}
+
+.brand-mark-loader__scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.brand-mark-loader__frame {
+  position: relative;
+  display: grid;
+  width: 11.5rem;
+  height: 11.5rem;
+  place-items: center;
+}
+
+.brand-mark-loader--section .brand-mark-loader__frame {
+  width: 8.25rem;
+  height: 8.25rem;
+}
+
+.brand-mark-loader__orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 196deg,
+    color-mix(in srgb, var(--zaffiro-gold-500) 55%, transparent) 248deg,
+    var(--zaffiro-gold-500) 300deg,
+    var(--zaffiro-sapphire-800) 348deg,
+    transparent 360deg
+  );
+  animation: brand-mark-spin 1.35s linear infinite;
+  -webkit-mask-image: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 3px),
+    #000 calc(100% - 3px)
+  );
+  mask-image: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+}
+
+.brand-mark-loader--dark .brand-mark-loader__orbit {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 196deg,
+    color-mix(in srgb, var(--zaffiro-gold-500) 70%, transparent) 248deg,
+    var(--zaffiro-gold-500) 300deg,
+    var(--zaffiro-white) 348deg,
+    transparent 360deg
+  );
+}
+
+.brand-mark-loader__mark {
+  position: relative;
+  z-index: 1;
+  display: block;
+  overflow: visible;
+  animation: brand-mark-idle 2.8s ease-in-out 0.9s infinite;
+}
+
+.brand-mark-loader__facet {
+  fill: var(--zaffiro-sapphire-800);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: brand-mark-facet-in 0.7s var(--zaffiro-ease-out) both;
+}
+
+.brand-mark-loader__facet--gold {
+  fill: var(--zaffiro-gold-500);
+}
+
+.brand-mark-loader--dark .brand-mark-loader__facet:not(.brand-mark-loader__facet--gold) {
+  fill: var(--zaffiro-white);
+}
+
+.brand-mark-loader__facet--1 {
+  --facet-x: 0px;
+  --facet-y: -16px;
+  animation-delay: 0.05s;
+}
+
+.brand-mark-loader__facet--2 {
+  --facet-x: 14px;
+  --facet-y: -6px;
+  animation-delay: 0.14s;
+}
+
+.brand-mark-loader__facet--3 {
+  --facet-x: -14px;
+  --facet-y: 12px;
+  animation-delay: 0.23s;
+}
+
+.brand-mark-loader__facet--4 {
+  --facet-x: 4px;
+  --facet-y: 16px;
+  animation-delay: 0.32s;
+}
+
+.brand-mark-loader__facet--5 {
+  --facet-x: 10px;
+  --facet-y: 4px;
+  animation-delay: 0.48s;
+}
+
+.brand-mark-loader__label {
+  color: var(--zaffiro-sapphire-800);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.brand-mark-loader--dark .brand-mark-loader__label {
+  color: var(--zaffiro-white);
+}
+
+.brand-mark-loader__label::after {
+  display: inline-block;
+  width: 1.35em;
+  text-align: left;
+  content: '';
+  animation: brand-mark-dots 1.2s steps(4, end) infinite;
+}
+
+@keyframes brand-mark-facet-in {
+  from {
+    opacity: 0;
+    transform: translate(var(--facet-x, 0), var(--facet-y, 0)) scale(0.84);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes brand-mark-idle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes brand-mark-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes brand-mark-dots {
+  0% {
+    content: '';
+  }
+
+  25% {
+    content: '.';
+  }
+
+  50% {
+    content: '..';
+  }
+
+  75% {
+    content: '...';
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-mark-loader__facet,
+  .brand-mark-loader__orbit,
+  .brand-mark-loader__mark,
+  .brand-mark-loader__label::after {
+    animation: none;
+  }
+
+  .brand-mark-loader__facet {
+    opacity: 1;
+    transform: none;
+  }
+
+  .brand-mark-loader__orbit {
+    opacity: 0.75;
+    transform: none;
+  }
+
+  .brand-mark-loader__label::after {
+    content: '...';
+  }
+}
