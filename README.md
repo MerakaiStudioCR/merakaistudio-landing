@@ -1,5 +1,7 @@
 # Merakai Studio
 
+The official website of Merakai Studio, an independent studio in Costa Rica for creativity, strategy, and technology.
+
 Sitio corporativo de Merakai Studio. Next.js 16, TypeScript, Tailwind CSS 4 y next-intl.
 
 ## Instalación
