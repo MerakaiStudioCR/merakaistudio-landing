@@ -6,10 +6,12 @@ import { getProduct, type ProductSlug } from '~/content/products'
 import { Link } from '~/i18n/navigation'
 import { cn } from '~/shared/lib/cn'
 
+type LandingSlug = Exclude<ProductSlug, 'kizvna'>
+
 const focusKeys = ['focus1', 'focus2', 'focus3'] as const
 const benefitKeys = ['benefit1', 'benefit2', 'benefit3'] as const
 
-export async function ProductLanding({ slug }: { slug: ProductSlug }) {
+export async function ProductLanding({ slug }: { slug: LandingSlug }) {
   const t = await getTranslations('site')
   const product = getProduct(slug)
   if (!product) return null
@@ -153,7 +155,7 @@ async function LandingAction({
   slug,
   className
 }: {
-  slug: ProductSlug
+  slug: LandingSlug
   className?: string
 }) {
   const t = await getTranslations('site')
