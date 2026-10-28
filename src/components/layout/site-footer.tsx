@@ -1,8 +1,15 @@
 import { getTranslations } from 'next-intl/server'
-import Logo from '~/components/brand/logo'
-import { getPublicContactEmail, getSocialLinks } from '~/content/site'
 import { products } from '~/content/products'
+import { getPublicContactEmail, getSocialLinks } from '~/content/site'
 import { Link } from '~/i18n/navigation'
+
+const explore = [
+  { href: '/#estudio', key: 'studio' },
+  { href: '/#productos', key: 'products' },
+  { href: '/#clientes', key: 'clients' },
+  { href: '/#servicios', key: 'services' },
+  { href: '/#metodo', key: 'essence' }
+] as const
 
 const SiteFooter = async () => {
   const t = await getTranslations('site')
@@ -11,113 +18,96 @@ const SiteFooter = async () => {
   const social = getSocialLinks()
 
   return (
-    <footer className='border-merakai-navy/10 border-t bg-merakai-gray'>
-      <div className='mx-auto grid w-full max-w-6xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-12'>
-        <div className='md:col-span-5'>
-          <Logo label={t('meta.siteName')} />
-          <p className='mt-6 max-w-sm text-merakai-navy/75 text-sm leading-relaxed'>
-            {t('footer.blurb')}
-          </p>
-        </div>
-        <div className='md:col-span-3'>
-          <p className='font-body text-xs uppercase tracking-[0.18em]'>
-            {t('footer.products')}
-          </p>
-          <ul className='mt-4 space-y-2'>
-            {products.map((product) => (
-              <li key={product.slug}>
-                <Link
-                  href={`/products/${product.slug}`}
-                  prefetch={false}
-                  className='text-sm hover:text-merakai-orange'
-                >
-                  {t(`items.${product.slug}.name`)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className='md:col-span-2'>
-          <p className='font-body text-xs uppercase tracking-[0.18em]'>
-            {t('footer.company')}
-          </p>
-          <ul className='mt-4 space-y-2 text-sm'>
-            <li>
+    <div className='merakai-landing'>
+      <footer>
+        <div className='wrap'>
+          <div className='footer-grid'>
+            <div>
               <Link
-                href='/about'
+                href='/'
                 prefetch={false}
-                className='hover:text-merakai-orange'
+                aria-label={t('meta.siteName')}
+                className='brand brand-official footer-brand'
               >
+                <img
+                  src='/brand/merakai-logo-oficial.png'
+                  alt=''
+                  width={1889}
+                  height={829}
+                />
+              </Link>
+              <p>{t('meta.declaration')}</p>
+              {email ? <a href={`mailto:${email}`}>{email}</a> : null}
+              {social.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  rel='noreferrer'
+                  target='_blank'
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+            <div>
+              <h4>{t('footer.explore')}</h4>
+              {explore.map((item) => (
+                <Link key={item.href} href={item.href} prefetch={false}>
+                  {item.key === 'essence'
+                    ? t('footer.essence')
+                    : t(`nav.${item.key}`)}
+                </Link>
+              ))}
+              <Link href='/about' prefetch={false}>
                 {t('nav.about')}
               </Link>
-            </li>
-            <li>
-              <Link
-                href='/contact'
-                prefetch={false}
-                className='hover:text-merakai-orange'
-              >
+              <Link href='/contact' prefetch={false}>
                 {t('nav.contact')}
               </Link>
-            </li>
-          </ul>
-        </div>
-        <div className='md:col-span-2'>
-          <p className='font-body text-xs uppercase tracking-[0.18em]'>
-            {t('footer.legal')}
-          </p>
-          <ul className='mt-4 space-y-2 text-sm'>
-            <li>
-              <Link
-                href='/privacy'
-                prefetch={false}
-                className='hover:text-merakai-orange'
-              >
+            </div>
+            <div>
+              <h4>{t('footer.products')}</h4>
+              {products.map((product) =>
+                product.status === 'in-development' ? (
+                  <span key={product.slug} className='footer-static'>
+                    {t(`items.${product.slug}.name`)}
+                  </span>
+                ) : product.websiteUrl ? (
+                  <a
+                    key={product.slug}
+                    href={product.websiteUrl}
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    {t(`items.${product.slug}.name`)} ↗
+                  </a>
+                ) : (
+                  <Link
+                    key={product.slug}
+                    href={`/products/${product.slug}`}
+                    prefetch={false}
+                  >
+                    {t(`items.${product.slug}.name`)}
+                  </Link>
+                )
+              )}
+              <Link href='/privacy' prefetch={false}>
                 {t('footer.privacy')}
               </Link>
-            </li>
-            <li>
-              <Link
-                href='/terms'
-                prefetch={false}
-                className='hover:text-merakai-orange'
-              >
+              <Link href='/terms' prefetch={false}>
                 {t('footer.terms')}
               </Link>
-            </li>
-          </ul>
-          {email ? (
-            <a
-              href={`mailto:${email}`}
-              className='mt-6 block text-sm hover:text-merakai-orange'
-            >
-              {email}
-            </a>
-          ) : null}
-          {social.length > 0 ? (
-            <ul className='mt-4 space-y-2 text-sm'>
-              {social.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className='hover:text-merakai-orange'
-                    rel='noreferrer'
-                    target='_blank'
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+            </div>
+          </div>
+          <div className='footline'>
+            <span>
+              © {year} {t('footer.rights')}
+            </span>
+            <span>{t('footer.tagline')}</span>
+          </div>
         </div>
-      </div>
-      <div className='border-merakai-navy/10 border-t'>
-        <p className='mx-auto w-full max-w-6xl px-5 py-6 text-merakai-navy/60 text-xs sm:px-8'>
-          © {year} {t('footer.rights')}
-        </p>
-      </div>
-    </footer>
+      </footer>
+    </div>
   )
 }
 

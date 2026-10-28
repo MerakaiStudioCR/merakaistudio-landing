@@ -2,15 +2,13 @@ import { getTranslations } from 'next-intl/server'
 import SectionHeading from '~/components/shared/section-heading'
 import { ZaffiroLogo } from '~/components/brand/zaffiro-logo'
 import { KizvnaStory } from '~/components/products/kizvna/kizvna-story'
-import { getProduct, products, type ProductSlug } from '~/content/products'
+import { ProductLanding } from '~/components/products/product-landing'
+import { getProduct, products } from '~/content/products'
 import { getSiteUrl } from '~/content/site'
 import { Link } from '~/i18n/navigation'
 import JsonLd from '~/components/seo/json-ld'
 import { softwareApplicationJsonLd } from '~/lib/json-ld'
 import { notFound } from 'next/navigation'
-
-const focusKeys = ['focus1', 'focus2', 'focus3'] as const
-const benefitKeys = ['benefit1', 'benefit2', 'benefit3'] as const
 export async function CatalogView() {
   const t = await getTranslations('site')
 
@@ -44,13 +42,25 @@ export async function CatalogView() {
               </p>
             </div>
             <div className='lg:col-span-2 lg:text-right'>
-              <Link
-                href={`/products/${product.slug}`}
-                prefetch={false}
-                className='font-heading text-sm hover:text-merakai-orange'
-              >
-                {t(`items.${product.slug}.cta`)}
-              </Link>
+              {product.status ===
+              'in-development' ? null : product.websiteUrl ? (
+                <a
+                  href={product.websiteUrl}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='font-heading text-sm hover:text-merakai-orange'
+                >
+                  {t(`items.${product.slug}.cta`)}
+                </a>
+              ) : (
+                <Link
+                  href={`/products/${product.slug}`}
+                  prefetch={false}
+                  className='font-heading text-sm hover:text-merakai-orange'
+                >
+                  {t(`items.${product.slug}.cta`)}
+                </Link>
+              )}
             </div>
           </article>
         ))}
@@ -73,70 +83,6 @@ export async function ProductView({ slug }: { slug: string }) {
   return (
     <article className={`merakai-product merakai-product--${product.slug}`}>
       {software ? <JsonLd data={software} /> : null}
-      {product.slug === 'kizvna' ? null : (
-        <header
-          className={
-            product.slug === 'zaffiro'
-              ? 'relative overflow-hidden bg-merakai-navy text-merakai-paper'
-              : 'relative overflow-hidden border-merakai-navy/10 border-b'
-          }
-        >
-          <div className='merakai-grid' aria-hidden />
-          <div className='relative mx-auto grid w-full max-w-6xl gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-12'>
-            <div className='merakai-hero-copy lg:col-span-7'>
-              <p
-                className={
-                  product.slug === 'zaffiro'
-                    ? 'font-body text-merakai-paper/70 text-xs uppercase tracking-[0.2em]'
-                    : 'font-body text-merakai-orange text-xs uppercase tracking-[0.2em]'
-                }
-              >
-                {t(`status.${product.status}`)}
-              </p>
-              <h1 className='mt-5 font-heading font-semibold text-6xl tracking-[-0.045em] sm:text-7xl'>
-                {product.slug === 'zaffiro' ? (
-                  <ZaffiroLogo
-                    variant='lockup'
-                    title={t('items.zaffiro.name')}
-                    className='h-16 w-auto max-w-full text-white sm:h-20'
-                  />
-                ) : (
-                  t(`items.${product.slug}.name`)
-                )}
-              </h1>
-              <p
-                className={
-                  product.slug === 'zaffiro'
-                    ? 'mt-6 max-w-xl text-merakai-paper/80 text-xl leading-relaxed'
-                    : 'mt-6 max-w-xl text-merakai-navy/75 text-xl leading-relaxed'
-                }
-              >
-                {t(`items.${product.slug}.tagline`)}
-              </p>
-            </div>
-            <div className='lg:col-span-5 lg:pt-16'>
-              <p
-                className={
-                  product.slug === 'zaffiro'
-                    ? 'text-merakai-paper/80 leading-relaxed'
-                    : 'text-merakai-navy/80 leading-relaxed'
-                }
-              >
-                {t(`items.${product.slug}.description`)}
-              </p>
-              {product.websiteUrl ? (
-                <a
-                  href={product.websiteUrl}
-                  className='merakai-action merakai-product-action mt-8 inline-flex px-5 py-3 font-heading font-semibold'
-                >
-                  {t(`items.${product.slug}.cta`)}
-                </a>
-              ) : null}
-            </div>
-          </div>
-        </header>
-      )}
-
       {product.slug === 'kizvna' ? (
         <KizvnaStory />
       ) : product.pending ? (
@@ -151,7 +97,7 @@ export async function ProductView({ slug }: { slug: string }) {
           </div>
         </section>
       ) : (
-        <ProductDetail slug={product.slug} />
+        <ProductLanding slug={product.slug} />
       )}
 
       {product.slug === 'kizvna' ? null : (
@@ -164,15 +110,17 @@ export async function ProductView({ slug }: { slug: string }) {
                   className='h-16 w-auto text-merakai-paper'
                 />
               ) : null}
-              <h2 className='font-heading font-semibold text-4xl tracking-[-0.03em]'>
-                {product.websiteUrl
-                  ? t('product.officialTitle')
-                  : t('product.talk')}
+              <h2 className='max-w-xl font-heading font-semibold text-4xl tracking-[-0.03em]'>
+                {product.pending
+                  ? t('product.talk')
+                  : t(`items.${product.slug}.invite`)}
               </h2>
             </div>
             {product.websiteUrl ? (
               <a
                 href={product.websiteUrl}
+                target='_blank'
+                rel='noreferrer'
                 className='merakai-action merakai-product-action inline-flex px-5 py-3 font-heading font-semibold'
               >
                 {t(`items.${product.slug}.cta`)}
@@ -190,92 +138,56 @@ export async function ProductView({ slug }: { slug: string }) {
         </section>
       )}
 
-      <section
-        className={`mx-auto w-full max-w-6xl px-5 py-16 sm:px-8${product.slug === 'kizvna' ? ' kizvna-also' : ''}`}
-      >
-        <h2 className='font-heading font-semibold text-2xl'>
-          {t('product.others')}
-        </h2>
-        <ul className='mt-6 grid gap-4 sm:grid-cols-2'>
-          {others.map((item) => (
-            <li key={item.slug}>
-              <Link
-                href={`/products/${item.slug}`}
-                prefetch={false}
-                className='flex items-center justify-between border border-merakai-navy/10 px-5 py-6 hover:border-merakai-orange'
-              >
-                <span className='font-heading text-2xl'>
-                  {t(`items.${item.slug}.name`)}
-                </span>
-                <span className='text-merakai-orange text-sm'>
-                  {t(`status.${item.status}`)}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {product.slug === 'kizvna' ? null : (
+        <section className='mx-auto w-full max-w-6xl px-5 py-16 sm:px-8'>
+          <h2 className='font-heading font-semibold text-2xl'>
+            {t('product.others')}
+          </h2>
+          <ul className='mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+            {others.map((item) => (
+              <li key={item.slug}>
+                {item.status === 'in-development' ? (
+                  <div className='flex items-center justify-between border border-merakai-navy/10 px-5 py-6'>
+                    <span className='font-heading text-2xl'>
+                      {t(`items.${item.slug}.name`)}
+                    </span>
+                    <span className='text-merakai-orange text-sm'>
+                      {t(`status.${item.status}`)}
+                    </span>
+                  </div>
+                ) : item.websiteUrl ? (
+                  <a
+                    href={item.websiteUrl}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='flex items-center justify-between border border-merakai-navy/10 px-5 py-6 hover:border-merakai-orange'
+                  >
+                    <span className='font-heading text-2xl'>
+                      {t(`items.${item.slug}.name`)}
+                    </span>
+                    <span className='text-merakai-orange text-sm'>
+                      {t(`status.${item.status}`)}
+                    </span>
+                  </a>
+                ) : (
+                  <Link
+                    href={`/products/${item.slug}`}
+                    prefetch={false}
+                    className='flex items-center justify-between border border-merakai-navy/10 px-5 py-6 hover:border-merakai-orange'
+                  >
+                    <span className='font-heading text-2xl'>
+                      {t(`items.${item.slug}.name`)}
+                    </span>
+                    <span className='text-merakai-orange text-sm'>
+                      {t(`status.${item.status}`)}
+                    </span>
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </article>
-  )
-}
-
-async function ProductDetail({ slug }: { slug: ProductSlug }) {
-  const t = await getTranslations('site')
-  const product = getProduct(slug)
-  const showsDirection =
-    product?.status === 'concept' || product?.status === 'in-development'
-
-  return (
-    <div className='merakai-fold mx-auto grid w-full max-w-6xl gap-16 px-5 py-16 sm:px-8 lg:grid-cols-2'>
-      <section>
-        <h2 className='font-heading font-semibold text-3xl tracking-[-0.03em]'>
-          {t('product.problem')}
-        </h2>
-        <p className='mt-4 text-merakai-navy/75 leading-relaxed'>
-          {t(`items.${slug}.problem`)}
-        </p>
-      </section>
-      <section>
-        <h2 className='font-heading font-semibold text-3xl tracking-[-0.03em]'>
-          {t('product.value')}
-        </h2>
-        <p className='mt-4 text-merakai-navy/75 leading-relaxed'>
-          {t(`items.${slug}.value`)}
-        </p>
-      </section>
-      <section>
-        <h2 className='font-heading font-semibold text-3xl tracking-[-0.03em]'>
-          {showsDirection ? t('product.focus') : t('product.modules')}
-        </h2>
-        {showsDirection ? (
-          <p className='mt-3 text-merakai-navy/60 text-sm'>
-            {t('product.focusNote')}
-          </p>
-        ) : null}
-        <ul className='mt-6 space-y-4'>
-          {focusKeys.map((key) => (
-            <li key={key} className='border-merakai-orange border-l-2 pl-4'>
-              {t(`items.${slug}.${key}`)}
-            </li>
-          ))}
-        </ul>
-      </section>
-      <section>
-        <h2 className='font-heading font-semibold text-3xl tracking-[-0.03em]'>
-          {showsDirection ? t('product.benefits') : t('product.benefitsLive')}
-        </h2>
-        <ul className='mt-6 space-y-4'>
-          {benefitKeys.map((key) => (
-            <li key={key}>{t(`items.${slug}.${key}`)}</li>
-          ))}
-        </ul>
-        <h2 className='mt-12 font-heading font-semibold text-3xl tracking-[-0.03em]'>
-          {t('product.audience')}
-        </h2>
-        <p className='mt-4 text-merakai-navy/75 leading-relaxed'>
-          {t(`items.${slug}.audience`)}
-        </p>
-      </section>
-    </div>
   )
 }

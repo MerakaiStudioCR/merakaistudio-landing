@@ -48,6 +48,14 @@
   --color-merakai-accent-fill: #8fc1b5;
 }
 
+.merakai-product--dyniq {
+  --color-merakai-navy: #114b94;
+  --color-merakai-orange: #0d59b5;
+  --color-merakai-gray: #eef8ff;
+  --color-merakai-on-accent: #ffffff;
+  --color-merakai-accent-fill: #0d6fe0;
+}
+
 .merakai-product-action {
   background: var(--color-merakai-accent-fill, var(--color-merakai-orange));
   color: var(--color-merakai-on-accent, var(--color-merakai-navy));

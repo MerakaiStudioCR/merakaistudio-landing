@@ -1,314 +1,445 @@
+import Image from 'next/image'
+import { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
-import HeroField from '~/components/brand/hero-field'
-import { StudioScene } from '~/components/brand/studio-scenes'
-import { ZaffiroLogo } from '~/components/brand/zaffiro-logo'
-import { KizvnaStill } from '~/components/products/kizvna/kizvna-still'
-import SectionHeading from '~/components/shared/section-heading'
+import { ContactSignal } from '~/components/brand/contact-signal'
+import { CreativeSystem } from '~/components/brand/creative-system'
+import { MerakaiScene } from '~/components/brand/merakai-scene'
+import { ServiceArt } from '~/components/brand/service-art'
 import { products } from '~/content/products'
+import { getPublicContactEmail } from '~/content/site'
+import HomeContactForm from '~/features/contact/home-contact-form'
 import { Link } from '~/i18n/navigation'
-import { cn } from '~/shared/lib/cn'
+
+const tickerItems = [2, 3, 4, 1] as const
+const tickerCopies = ['a', 'b'] as const
+const services = [
+  { item: 3, tone: 'brand', icon: '⌘' },
+  { item: 1, tone: 'software', icon: '↗' },
+  { item: 2, tone: 'product', icon: '▧' },
+  { item: 4, tone: 'strategy', icon: '✳' },
+  { item: 5, tone: 'content', icon: '◉' },
+  { item: 6, tone: 'consult', icon: '⟡' }
+] as const
+const marqueeCopies = ['a', 'b'] as const
+const clients = [
+  { name: 'Mundo Futsal', src: '/brand/mundo-futsal.svg', tone: 'light' },
+  { name: 'Klinue', src: '/brand/Klinue.svg', tone: 'light' },
+  {
+    name: 'Tienda de Empleados Públicos',
+    src: '/brand/tep-official.png',
+    tone: 'light',
+    ink: 'white'
+  },
+  { name: 'Ritter Sport', src: '/brand/ritter-sport.svg', tone: 'light' },
+  { name: 'Saeta', src: '/brand/Saeta.svg', tone: 'dark' },
+  { name: 'CCDR San José', src: '/brand/san-jose-ccdr.png', tone: 'light' },
+  { name: 'Katana', src: '/brand/katana-wordmark.png', tone: 'dark' },
+  { name: 'Munich', src: '/brand/munich.svg', tone: 'light' },
+  { name: 'Joma Futsal', src: '/brand/Joma_Logo.png', tone: 'light' }
+] as const
+const steps = [1, 2, 3, 4] as const
+const barHeights = ['38%', '75%', '58%', '85%', '63%', '92%']
+const waves = [1, 2, 3, 4, 5, 6, 7, 8]
 
 const HomeView = async () => {
   const t = await getTranslations('site')
-  const ticker = [
-    t('meta.slogan'),
-    t('meta.declaration'),
-    t('home.philosophy.pillar1Title'),
-    t('home.philosophy.pillar2Title'),
-    t('home.philosophy.pillar3Title')
-  ]
+  const email = getPublicContactEmail()
+  const zaffiro = products.find((product) => product.slug === 'zaffiro')
+  const dyniq = products.find((product) => product.slug === 'dyniq')
 
   return (
-    <>
-      <section className='merakai-hero relative'>
-        <div className='merakai-hero__pin overflow-hidden'>
-          <div className='merakai-grid' aria-hidden />
-          <div className='relative mx-auto grid w-full max-w-6xl items-end gap-16 px-5 pt-16 pb-20 sm:px-8 sm:pt-24 lg:grid-cols-12 lg:pb-28'>
-            <div className='merakai-hero-copy lg:col-span-7'>
-              <p className='font-body text-merakai-orange text-xs uppercase tracking-[0.22em]'>
-                {t('home.hero.eyebrow')}
-              </p>
-              <h1 className='mt-6 max-w-4xl text-balance font-heading font-semibold text-[clamp(2.8rem,6vw,5.4rem)] text-merakai-navy leading-[0.92] tracking-[-0.045em]'>
-                {t('home.hero.title')}
-              </h1>
-              <p className='mt-8 max-w-xl text-lg text-merakai-navy/75 leading-relaxed'>
-                {t('home.hero.subtitle')}
-              </p>
-              <div className='mt-10 flex flex-wrap gap-3'>
-                <Link
-                  href='/products'
-                  prefetch={false}
-                  className='merakai-action bg-merakai-orange px-5 py-3 font-heading font-semibold text-merakai-navy'
-                >
-                  {t('home.hero.primaryCta')}
-                </Link>
-                <Link
-                  href='/about'
-                  prefetch={false}
-                  className='merakai-action border border-merakai-navy/20 px-5 py-3 font-heading font-semibold text-merakai-navy'
-                >
-                  {t('home.hero.secondaryCta')}
-                </Link>
-              </div>
+    <div className='merakai-landing'>
+      <section className='hero' id='inicio'>
+        <div className='wrap hero-inner'>
+          <div className='hero-copy'>
+            <div className='eyebrow orange'>{t('home.hero.eyebrow')}</div>
+            <h1>
+              {t('home.hero.titleLead')}{' '}
+              <em>{`${t('home.hero.titleAccent')}${t('home.hero.titleEnd')}`}</em>
+            </h1>
+            <p className='hero-sub'>{t('home.hero.subtitle')}</p>
+            <div className='hero-actions'>
+              <a className='btn btn-primary' href='#productos'>
+                {t('home.hero.primaryCta')} <span>↗</span>
+              </a>
+              <a className='btn btn-ghost' href='#estudio'>
+                {t('home.hero.secondaryCta')} <span>↘</span>
+              </a>
             </div>
-            <HeroField className='lg:col-span-5' />
+            <div className='hero-foot'>
+              <span>
+                <i /> {t('home.studio.discipline1Title')}
+              </span>
+              <span>
+                <i /> {t('home.studio.discipline2Title')}
+              </span>
+              <span>
+                <i /> {t('home.studio.discipline3Title')}
+              </span>
+            </div>
           </div>
+          <MerakaiScene
+            lab={t('home.hero.lab')}
+            labLine={t('home.hero.labLine')}
+            pill={t('home.hero.pill')}
+            label={t('home.hero.scene')}
+          />
         </div>
       </section>
-      <div className='merakai-ticker' aria-hidden>
-        <div className='merakai-ticker__track'>
-          {[0, 1].map((copy) => (
-            <p key={copy} className='contents'>
-              {ticker.map((item) => (
-                <span key={`${copy}-${item}`} className='merakai-ticker__item'>
-                  {item}
+      <div className='ticker ticker-seamless' aria-hidden='true'>
+        <div className='ticker-track'>
+          {tickerCopies.map((copy) => (
+            <div className='ticker-unit' key={copy}>
+              {tickerItems.map((item) => (
+                <span key={`${copy}-${item}`}>
+                  {t(`home.hero.ticker${item}`)}
+                  <b>✳</b>
                 </span>
               ))}
-            </p>
+            </div>
           ))}
         </div>
       </div>
-
-      <section className='merakai-philosophy merakai-fold bg-merakai-gray'>
-        <div className='merakai-philosophy__pin mx-auto grid w-full max-w-6xl gap-14 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-12'>
-          <div className='lg:col-span-5'>
-            <SectionHeading
-              eyebrow={t('home.philosophy.eyebrow')}
-              title={t('home.philosophy.title')}
-              subtitle={t('home.philosophy.body')}
-            />
-            <StudioScene scene='studio' className='merakai-in mt-10' />
+      <section className='section' id='estudio'>
+        <div className='wrap intro-grid'>
+          <div className='intro-main'>
+            <div className='eyebrow orange'>{t('home.studio.eyebrow')}</div>
+            <h2 className='section-title'>
+              <TitleLines value={t('home.studio.title')} />
+            </h2>
+            <p className='intro-lead'>{t('home.studio.body')}</p>
           </div>
-          <div className='merakai-pillars relative lg:col-span-6 lg:col-start-7'>
-            <span className='merakai-rail' aria-hidden />
-            <ol className='space-y-10'>
-              {(['pillar1', 'pillar2', 'pillar3'] as const).map(
-                (key, index) => (
-                  <li
-                    key={key}
-                    className='merakai-pillar border-merakai-navy/10 border-t pt-6'
-                  >
-                    <p className='font-heading text-merakai-orange text-sm'>
-                      0{index + 1}
-                    </p>
-                    <h3 className='mt-3 font-heading font-semibold text-2xl tracking-[-0.03em]'>
-                      {t(`home.philosophy.${key}Title`)}
-                    </h3>
-                    <p className='mt-3 text-merakai-navy/75 leading-relaxed'>
-                      {t(`home.philosophy.${key}Body`)}
-                    </p>
-                  </li>
-                )
-              )}
-            </ol>
+          <div className='intro-right'>
+            <CreativeSystem
+              label={t('home.studio.scene')}
+              system={t('home.studio.system')}
+              live={t('home.studio.live')}
+              impact={t('home.studio.impact')}
+              connections={t('home.studio.connections')}
+              strategy={t('home.studio.discipline1Title')}
+              creativity={t('home.studio.discipline2Title')}
+              technology={t('home.studio.discipline3Title')}
+            />
+            <p className='intro-statement'>
+              <strong>{t('home.studio.asideTitle')}</strong>
+              <br />
+              {t('home.studio.asideBody')}
+            </p>
           </div>
         </div>
       </section>
-
-      <section className='mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28'>
-        <SectionHeading
-          eyebrow={t('home.products.eyebrow')}
-          title={t('home.products.title')}
-          subtitle={t('home.products.subtitle')}
-        />
-        <div className='merakai-products mt-14'>
-          <ProductPanel
-            slug='zaffiro'
-            className='merakai-from-fold min-h-[28rem] bg-merakai-navy text-merakai-paper'
-            tone='paper'
-          />
-          <div className='merakai-products__pair'>
-            <span className='merakai-bridge' aria-hidden />
-            <ProductPanel
-              slug='kizvna'
-              className='merakai-from-left min-h-80 bg-merakai-gray text-merakai-navy'
-            />
-            <ProductPanel
-              slug='vytal'
-              className='merakai-from-right min-h-96 bg-merakai-paper text-merakai-navy ring-1 ring-merakai-navy/10'
-            />
+      <section className='section work-section' id='productos'>
+        <div className='wrap'>
+          <div className='section-heading'>
+            <div>
+              <div className='eyebrow orange'>{t('home.products.eyebrow')}</div>
+              <h2 className='section-title'>
+                <TitleLines value={t('home.products.title')} />
+              </h2>
+            </div>
+            <p>{t('home.products.intro')}</p>
           </div>
-        </div>
-      </section>
-
-      <section className='border-merakai-navy/10 border-y'>
-        <div className='mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28'>
-          <div className='flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between'>
-            <SectionHeading
-              eyebrow={t('home.capabilities.eyebrow')}
-              title={t('home.capabilities.title')}
-            />
-            <StudioScene scene='design' className='merakai-in shrink-0' />
-          </div>
-          <ul className='merakai-lattice mt-14 grid gap-px bg-merakai-navy/10 sm:grid-cols-2 lg:grid-cols-3'>
-            {([1, 2, 3, 4, 5, 6] as const).map((item) => (
-              <li key={item} className='merakai-cell bg-merakai-paper p-7'>
-                <p className='font-heading text-merakai-sand text-sm'>
-                  0{item}
-                </p>
-                <h3 className='mt-4 font-heading font-semibold text-xl tracking-[-0.02em]'>
-                  {t(`home.capabilities.item${item}Title`)}
+          <article className='product-feature'>
+            <div className='product-copy'>
+              <div>
+                <div className='eyebrow orange'>
+                  {t('home.products.featureEyebrow')}
+                </div>
+                <h3>
+                  {t('items.zaffiro.name')}
+                  <span className='orange'>.</span>
                 </h3>
-                <p className='mt-3 text-merakai-navy/70 text-sm leading-relaxed'>
-                  {t(`home.capabilities.item${item}Body`)}
-                </p>
+                <p>{t('home.products.featureBody')}</p>
+              </div>
+              <div className='product-actions'>
+                {zaffiro?.websiteUrl ? (
+                  <a
+                    className='product-bottom'
+                    href={zaffiro.websiteUrl}
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    {t('product.discover', { name: t('items.zaffiro.name') })}{' '}
+                    <span>↗</span>
+                  </a>
+                ) : null}
+              </div>
+            </div>
+            <div className='product-visual' aria-hidden>
+              <div className='water' />
+              <div className='water-top'>
+                <div className='toolbar'>{t('home.products.panel')}</div>
+                <div className='ui-grid'>
+                  <div className='ui-block'>
+                    <p className='ui-label'>{t('home.products.flow')}</p>
+                    <div className='bars'>
+                      {barHeights.map((height) => (
+                        <i key={height} style={{ height }} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className='ui-block'>
+                    <p className='ui-label'>{t('home.products.central')}</p>
+                  </div>
+                  <div className='ui-block wide'>
+                    <p className='ui-label'>{t('home.products.summary')}</p>
+                    <svg
+                      className='wave'
+                      viewBox='0 0 400 85'
+                      preserveAspectRatio='none'
+                      role='presentation'
+                      aria-hidden
+                    >
+                      <path
+                        d='M0 70 Q30 40 60 52 T120 35 T180 55 T240 27 T300 30 T360 10 T400 19'
+                        stroke='#2e9e96'
+                        fill='none'
+                        strokeWidth='4'
+                      />
+                      <path
+                        d='M0 70 Q30 40 60 52 T120 35 T180 55 T240 27 T300 30 T360 10 T400 19 V85 H0Z'
+                        fill='#8fc1b538'
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <div className='product-grid'>
+            <Link
+              href='/products/kizvna'
+              prefetch={false}
+              className='product-tile'
+            >
+              <div className='tile-art kiz' aria-hidden>
+                <div className='vinyl' />
+                <div className='soundwave'>
+                  {waves.map((bar) => (
+                    <i key={bar} />
+                  ))}
+                </div>
+              </div>
+              <div className='tile-copy'>
+                <div className='eyebrow orange'>
+                  {t('home.products.kizvnaEyebrow')}
+                </div>
+                <h3>
+                  {t('items.kizvna.name')}
+                  <span className='orange'>.</span>
+                </h3>
+                <p>{t('home.products.kizvnaBody')}</p>
+                <span className='tile-link'>
+                  {t('product.discover', { name: t('items.kizvna.name') })}{' '}
+                  <span>↗</span>
+                </span>
+              </div>
+            </Link>
+            <article className='product-tile product-tile--static'>
+              <div className='tile-art vyt' aria-hidden>
+                <div className='phone'>
+                  <strong>{t('items.vytal.name')}</strong>
+                  <span />
+                  <div className='ring' />
+                  <span />
+                </div>
+              </div>
+              <div className='tile-copy'>
+                <div className='eyebrow orange'>
+                  {t('home.products.vytalEyebrow')}
+                </div>
+                <h3>
+                  {t('items.vytal.name')}
+                  <span className='orange'>.</span>
+                </h3>
+                <p>{t('home.products.vytalBody')}</p>
+              </div>
+            </article>
+            <a
+              href={dyniq?.websiteUrl}
+              target='_blank'
+              rel='noreferrer'
+              className='product-tile'
+            >
+              <div className='tile-art dyn' aria-hidden>
+                <div className='chatbox'>
+                  <strong>{t('home.products.chatTitle')}</strong>
+                  <div className='bubble'>{t('home.products.chat1')}</div>
+                  <div className='bubble right'>{t('home.products.chat2')}</div>
+                  <div className='bubble orange-bubble'>
+                    {t('home.products.chat3')}
+                  </div>
+                </div>
+              </div>
+              <div className='tile-copy'>
+                <div className='eyebrow orange'>
+                  {t('home.products.dyniqEyebrow')}
+                </div>
+                <h3>
+                  {t('items.dyniq.name')}
+                  <span className='orange'>.</span>
+                </h3>
+                <p>{t('home.products.dyniqBody')}</p>
+                <span className='tile-link'>
+                  {t('product.discover', { name: t('items.dyniq.name') })}{' '}
+                  <span>↗</span>
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section className='clients-section' id='clientes'>
+        <div className='wrap'>
+          <div className='clients-intro'>
+            <div>
+              <div className='eyebrow orange'>{t('home.clients.eyebrow')}</div>
+              <h2 className='section-title'>
+                <TitleLines value={t('home.clients.titleLead')} />
+                <span className='orange'>{t('home.hero.titleEnd')}</span>
+              </h2>
+            </div>
+            <p>{t('home.clients.subtitle')}</p>
+          </div>
+          <ul className='client-logos' aria-label={t('home.clients.eyebrow')}>
+            {clients.map((client) => (
+              <li
+                className={`client-logo client-logo--${client.tone}${'ink' in client && client.ink === 'white' ? ' client-logo--white' : ''}`}
+                key={client.name}
+              >
+                <img src={client.src} alt={client.name} />
               </li>
             ))}
           </ul>
         </div>
       </section>
-
-      <section className='merakai-method'>
-        <div className='merakai-method__pin mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28'>
-          <div className='flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between'>
-            <SectionHeading
-              eyebrow={t('home.process.eyebrow')}
-              title={t('home.process.title')}
-            />
-            <StudioScene scene='code' className='merakai-in shrink-0' />
+      <section className='section service-section' id='servicios'>
+        <div className='wrap'>
+          <div className='eyebrow orange'>{t('home.capabilities.eyebrow')}</div>
+          <div className='section-heading'>
+            <h2 className='section-title'>
+              <TitleLines value={t('home.capabilities.titleLead')} />
+              <br />
+              <span className='muted-title'>
+                {t('home.capabilities.titleMuted')}
+              </span>
+            </h2>
+            <p>{t('home.capabilities.aside')}</p>
           </div>
-          <ol className='merakai-steps mt-16 grid gap-10 md:grid-cols-4'>
-            {([1, 2, 3, 4] as const).map((step) => (
-              <li key={step} className='merakai-step relative'>
-                <p className='merakai-step-index font-heading font-semibold text-5xl tracking-[-0.04em]'>
-                  <span className='merakai-step-index__ghost'>0{step}</span>
-                  <span className='merakai-step-index__fill' aria-hidden>
-                    0{step}
-                  </span>
-                </p>
-                <h3 className='mt-4 font-heading font-semibold text-2xl'>
-                  {t(`home.process.step${step}Title`)}
-                </h3>
-                <p className='mt-3 text-merakai-navy/75 text-sm leading-relaxed'>
-                  {t(`home.process.step${step}Body`)}
-                </p>
-              </li>
+          <div className='service-grid'>
+            {services.map((service, index) => (
+              <article className='service' key={service.item}>
+                <ServiceArt tone={service.tone} />
+                <div className='service-number'>
+                  {String(index + 1).padStart(2, '0')}{' '}
+                  <span className='service-icon'>{service.icon}</span>
+                </div>
+                <h3>{t(`home.capabilities.item${service.item}Title`)}</h3>
+                <p>{t(`home.capabilities.item${service.item}Body`)}</p>
+              </article>
             ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className='bg-merakai-gray'>
-        <div className='mx-auto grid w-full max-w-6xl items-end gap-10 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-12'>
-          <div className='lg:col-span-6'>
-            <SectionHeading
-              eyebrow={t('home.about.eyebrow')}
-              title={t('home.about.title')}
-              subtitle={t('home.about.body')}
-            />
-            <Link
-              href='/about'
-              prefetch={false}
-              className='merakai-action mt-8 inline-flex border border-merakai-navy px-5 py-3 font-heading font-semibold text-merakai-navy'
-            >
-              {t('home.about.cta')}
-            </Link>
-          </div>
-          <div className='grid gap-6 sm:grid-cols-3 lg:col-span-6'>
-            <StudioScene scene='studio' className='merakai-in max-w-none' />
-            <StudioScene scene='design' className='merakai-in max-w-none' />
-            <StudioScene scene='code' className='merakai-in max-w-none' />
           </div>
         </div>
       </section>
-
-      <section className='merakai-cta merakai-rise bg-merakai-navy text-merakai-paper'>
-        <StudioScene
-          scene='code'
-          tone='paper'
-          className='merakai-in pointer-events-none absolute right-8 bottom-8 hidden w-72 lg:block'
-        />
-        <div className='relative mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32 lg:pr-80'>
-          <h2 className='max-w-4xl text-balance font-heading font-semibold text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.95] tracking-[-0.04em]'>
-            {t('home.cta.title')}
-          </h2>
-          <p className='mt-6 max-w-xl text-lg text-merakai-paper/75'>
-            {t('home.cta.subtitle')}
-          </p>
-          <Link
-            href='/contact'
-            prefetch={false}
-            className='merakai-action relative mt-10 inline-flex bg-merakai-orange px-5 py-3 font-heading font-semibold text-merakai-navy'
-          >
-            {t('home.cta.cta')}
-          </Link>
+      <section className='philosophy' id='metodo'>
+        <div className='wrap'>
+          <div className='philo-grid'>
+            <div className='philo-art'>
+              <div
+                className='essence-art-v2 essence-art-craft'
+                role='img'
+                aria-label={t('home.philosophy.craft')}
+              >
+                <Image
+                  className='essence-render'
+                  src='/brand/merakai-essence-craft.png'
+                  alt=''
+                  width={1536}
+                  height={1024}
+                />
+              </div>
+            </div>
+            <div className='philo-copy'>
+              <div className='eyebrow orange'>
+                {t('home.philosophy.eyebrow')}
+              </div>
+              <h2 className='section-title'>
+                <TitleLines value={t('home.philosophy.title')} />
+              </h2>
+              <p>
+                {t.rich('home.philosophy.body', {
+                  strong: (chunks) => <strong>{chunks}</strong>
+                })}
+              </p>
+            </div>
+          </div>
+          <div className='steps'>
+            {steps.map((step) => (
+              <div className='step' key={step}>
+                <b>0{step}.</b>
+                <h3>{t(`home.process.step${step}Title`)}</h3>
+                <p>{t(`home.process.step${step}Body`)}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
-    </>
+      <section className='closing closing-v3' id='contacto'>
+        <div className='closing-grid-overlay' />
+        <div className='wrap closing-layout'>
+          <div className='closing-left'>
+            <div className='eyebrow'>
+              {t('home.cta.eyebrow')}{' '}
+              <span className='contact-status'>{t('home.cta.status')}</span>
+            </div>
+            <h2>
+              {t('home.cta.headlineLead')}
+              <br />
+              <em>{t('home.cta.headlineEm')}</em>
+              <br />
+              {t('home.cta.headlineEnd')}
+              <span className='orange'>.</span>
+            </h2>
+            <p className='closing-support'>{t('home.cta.title')}</p>
+            <p className='closing-subtitle'>{t('home.cta.subtitle')}</p>
+            <ContactSignal />
+          </div>
+          <div className='closing-right'>
+            <div className='contact-panel' id='mensaje'>
+              <div className='form-heading'>
+                <span>{t('home.cta.formKicker')}</span>
+                <span>↗</span>
+              </div>
+              <div className='form-question'>
+                <TitleLines value={t('home.cta.formQuestion')} />
+              </div>
+              <HomeContactForm email={email} />
+            </div>
+          </div>
+        </div>
+        <div className='contact-marquee' aria-hidden>
+          <div>
+            {marqueeCopies.map((copy) => (
+              <Fragment key={copy}>
+                {t('home.cta.marquee1')} <span>✳</span> {t('home.cta.marquee2')}{' '}
+                <span>✳</span> {t('home.cta.marquee3')} <span>✳</span>{' '}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
 
-const ProductPanel = async ({
-  slug,
-  className,
-  tone = 'navy'
-}: {
-  slug: (typeof products)[number]['slug']
-  className?: string
-  tone?: 'navy' | 'paper'
-}) => {
-  const t = await getTranslations('site')
-  const product = products.find((item) => item.slug === slug)
-  if (!product) return null
-
-  return (
-    <Link
-      href={`/products/${slug}`}
-      prefetch={false}
-      className={cn(
-        'merakai-panel group flex flex-col justify-between p-8 sm:p-10',
-        className
-      )}
-    >
-      <div>
-        <p
-          className={cn(
-            'font-body text-xs uppercase tracking-[0.18em]',
-            tone === 'paper' ? 'text-merakai-yellow' : 'text-merakai-orange'
-          )}
-        >
-          {t(`status.${product.status}`)}
-        </p>
-        <div className='mt-6 flex items-end justify-between gap-4'>
-          <h3 className='font-heading font-semibold text-4xl tracking-[-0.04em] sm:text-5xl'>
-            {slug === 'zaffiro' ? (
-              <ZaffiroLogo
-                variant='lockup'
-                title={t('items.zaffiro.name')}
-                className='h-16 w-auto max-w-full text-merakai-paper sm:h-20'
-              />
-            ) : (
-              t(`items.${slug}.name`)
-            )}
-          </h3>
-          {slug === 'kizvna' ? (
-            <KizvnaStill still='music' size='preview' />
-          ) : null}
-        </div>
-        <p
-          className={cn(
-            'mt-4 max-w-xl text-sm uppercase tracking-[0.14em]',
-            tone === 'paper' ? 'text-merakai-paper/70' : 'text-merakai-navy/60'
-          )}
-        >
-          {t(`items.${slug}.category`)}
-        </p>
-      </div>
-      <div className='mt-10 flex items-end justify-between gap-6'>
-        <p
-          className={cn(
-            'max-w-xl leading-relaxed',
-            tone === 'paper' ? 'text-merakai-paper/85' : 'text-merakai-navy/75'
-          )}
-        >
-          {t(`items.${slug}.description`)}
-        </p>
-        <span className='shrink-0 font-heading text-sm group-hover:text-merakai-orange'>
-          {t(`items.${slug}.cta`)}
-        </span>
-      </div>
-    </Link>
-  )
+function TitleLines({ value }: { value: string }) {
+  const lines = value.split('\n')
+  return lines.map((line) => (
+    <span key={line}>
+      {line}
+      {line !== lines.at(-1) ? <br /> : null}
+    </span>
+  ))
 }
 
 export default HomeView

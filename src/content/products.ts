@@ -7,14 +7,14 @@ export const productStatuses = [
 
 export type ProductStatus = (typeof productStatuses)[number]
 
-export const productSlugs = ['zaffiro', 'kizvna', 'vytal'] as const
+export const productSlugs = ['zaffiro', 'kizvna', 'vytal', 'dyniq'] as const
 
 export type ProductSlug = (typeof productSlugs)[number]
 
 export interface Product {
   slug: ProductSlug
   status: ProductStatus
-  accent: 'navy' | 'sand' | 'mint'
+  accent: 'navy' | 'sand' | 'mint' | 'blue'
   pending: boolean
   logo?: string
   websiteUrl?: string
@@ -40,6 +40,13 @@ export const products: readonly Product[] = [
     status: 'in-development',
     accent: 'mint',
     pending: false
+  },
+  {
+    slug: 'dyniq',
+    status: 'available',
+    accent: 'blue',
+    pending: false,
+    websiteUrl: 'https://dyniq-ai.com'
   }
 ]
 

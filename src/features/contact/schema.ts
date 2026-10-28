@@ -5,6 +5,7 @@ export const contactReasons = [
   'zaffiro',
   'kizvna',
   'vytal',
+  'dyniq',
   'partnership',
   'other'
 ] as const

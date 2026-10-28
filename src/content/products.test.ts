@@ -9,7 +9,7 @@ import {
 } from './products'
 
 describe('products', () => {
-  it('publishes Zaffiro at its official landing and keeps the rest unpublished', () => {
+  it('publishes Zaffiro and Dyniq at their official landings and keeps the rest unpublished', () => {
     const zaffiro = products.find((product) => product.slug === 'zaffiro')
     expect(zaffiro).toMatchObject({
       status: 'available',
@@ -31,13 +31,42 @@ describe('products', () => {
       const copy = catalog.items.zaffiro
       expect(copy.description).toMatch(/ASADA/)
       expect(copy.cta).toMatch(/zaffiro\.app/)
+      expect(copy.hook.length).toBeGreaterThan(12)
+      expect(copy.invite.length).toBeGreaterThan(12)
       expect(`${copy.description} ${copy.value}`).not.toMatch(
         /99\.8|San Rafael/
       )
     }
 
+    const dyniq = products.find((product) => product.slug === 'dyniq')
+    expect(dyniq).toMatchObject({
+      status: 'available',
+      websiteUrl: 'https://dyniq-ai.com'
+    })
+    expect(
+      dyniq &&
+        softwareApplicationJsonLd(dyniq, {
+          name: 'Dyniq',
+          description: 'Agents',
+          url: 'https://dyniq-ai.com'
+        })
+    ).toMatchObject({
+      '@type': 'SoftwareApplication',
+      url: 'https://dyniq-ai.com'
+    })
+
+    for (const catalog of [siteEs, siteEn]) {
+      const copy = catalog.items.dyniq
+      expect(copy.description.toLowerCase()).toMatch(/voz|voice/)
+      expect(copy.description.toLowerCase()).toMatch(/chat/)
+      expect(copy.cta).toMatch(/dyniq-ai\.com/)
+      expect(copy.hook).toMatch(/\?/)
+      expect(copy.invite.length).toBeGreaterThan(12)
+      expect(`${copy.description} ${copy.value}`).not.toMatch(/99\.|%/)
+    }
+
     for (const product of products) {
-      if (product.slug === 'zaffiro') continue
+      if (product.slug === 'zaffiro' || product.slug === 'dyniq') continue
       expect(canPublishSoftwareApplication(product.status)).toBe(false)
       expect(
         softwareApplicationJsonLd(product, {
@@ -46,6 +75,21 @@ describe('products', () => {
           url: `http://localhost:3000/products/${product.slug}`
         })
       ).toBeNull()
+    }
+  })
+
+  it('keeps Vytal in development and curious without a launch claim', () => {
+    const vytal = products.find((product) => product.slug === 'vytal')
+    expect(vytal).toMatchObject({ status: 'in-development' })
+    expect(vytal && canPublishSoftwareApplication(vytal.status)).toBe(false)
+
+    for (const catalog of [siteEs, siteEn]) {
+      const copy = catalog.items.vytal
+      expect(copy.hook.length).toBeGreaterThan(12)
+      expect(copy.invite.toLowerCase()).toMatch(/cuéntanos|tell us/)
+      expect(
+        `${copy.hook} ${copy.invite} ${copy.value}`.toLowerCase()
+      ).not.toMatch(/disponible|available now|lanzamiento|launch/)
     }
   })
 

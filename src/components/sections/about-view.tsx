@@ -94,12 +94,26 @@ const AboutView = async () => {
           <ul className='mt-6 space-y-2'>
             {products.map((product) => (
               <li key={product.slug}>
-                <Link
-                  href={`/products/${product.slug}`}
-                  className='hover:text-merakai-orange'
-                >
-                  {t(`items.${product.slug}.name`)}
-                </Link>
+                {product.status === 'in-development' ? (
+                  <span>{t(`items.${product.slug}.name`)}</span>
+                ) : product.websiteUrl ? (
+                  <a
+                    href={product.websiteUrl}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='hover:text-merakai-orange'
+                  >
+                    {t(`items.${product.slug}.name`)}
+                  </a>
+                ) : (
+                  <Link
+                    href={`/products/${product.slug}`}
+                    prefetch={false}
+                    className='hover:text-merakai-orange'
+                  >
+                    {t(`items.${product.slug}.name`)}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

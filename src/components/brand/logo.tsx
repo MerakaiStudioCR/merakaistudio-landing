@@ -25,7 +25,12 @@ const Logo = ({ className, tone = 'navy', label }: LogoProps) => {
         <span className='font-heading font-semibold text-[1.35rem] tracking-[-0.03em]'>
           Merakai
         </span>
-        <span className='font-body text-[0.68rem] uppercase tracking-[0.22em]'>
+        <span
+          className={cn(
+            'font-body text-[0.68rem] uppercase tracking-[0.22em]',
+            tone === 'paper' && 'text-merakai-orange'
+          )}
+        >
           Studio
         </span>
       </span>

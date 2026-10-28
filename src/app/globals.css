@@ -7,7 +7,7 @@
 @import '../styles/ui/brand-mark-loader.css';
 @import '../styles/tokens/merakai-brand.css';
 @import '../styles/motion/merakai-motion.css';
-@import '../styles/motion/kizvna-motion.css';
+@import '../styles/motion/landing-3d.css';
 
 /* Component styles */
 @import '../components/ui/button/styles.css';

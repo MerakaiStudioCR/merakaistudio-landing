@@ -8,16 +8,18 @@ import { routing } from '~/i18n/routing'
 import { cn } from '~/shared/lib/cn'
 
 const links = [
-  { href: '/', key: 'home' },
-  { href: '/products', key: 'products' },
-  { href: '/about', key: 'about' },
-  { href: '/contact', key: 'contact' }
+  { href: '/#estudio', key: 'studio' },
+  { href: '/#productos', key: 'products' },
+  { href: '/#clientes', key: 'clients' },
+  { href: '/#servicios', key: 'services' },
+  { href: '/#metodo', key: 'method' }
 ] as const
 
 const SiteHeader = () => {
   const t = useTranslations('site.nav')
   const meta = useTranslations('site.meta')
   const pathname = usePathname()
+  const onHome = pathname === '/'
   const locale = useLocale()
   const [open, setOpen] = useState(false)
   const [menuPath, setMenuPath] = useState(pathname)
@@ -77,31 +79,46 @@ const SiteHeader = () => {
     <header
       className={cn(
         'sticky top-0 z-40 border-b transition-colors duration-300',
-        scrolled
-          ? 'border-merakai-navy/10 bg-merakai-paper'
-          : 'border-transparent bg-merakai-paper'
+        onHome
+          ? scrolled
+            ? 'border-white/10 bg-merakai-navy'
+            : 'border-transparent bg-merakai-navy'
+          : scrolled
+            ? 'border-merakai-navy/10 bg-merakai-paper'
+            : 'border-transparent bg-merakai-paper'
       )}
     >
-      <div className='mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-5 sm:px-8'>
-        <Logo label={meta('siteName')} />
+      <div className='mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-5 sm:px-8'>
+        {onHome ? (
+          <Link
+            href='/'
+            prefetch={false}
+            aria-label={meta('siteName')}
+            className='home-lockup'
+          >
+            <img
+              src='/brand/merakai-logo-oficial.png'
+              alt=''
+              width={1889}
+              height={829}
+            />
+          </Link>
+        ) : (
+          <Logo label={meta('siteName')} tone='navy' />
+        )}
         <nav
           className='hidden items-center gap-8 lg:flex'
           aria-label={t('menu')}
         >
           {links.map((link) => {
-            const active =
-              link.href === '/'
-                ? pathname === '/'
-                : pathname.startsWith(link.href)
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 prefetch={false}
-                aria-current={active ? 'page' : undefined}
                 className={cn(
                   'merakai-nav-link font-body text-sm tracking-wide',
-                  active ? 'text-merakai-orange' : 'text-merakai-navy'
+                  onHome ? 'text-merakai-paper/85' : 'text-merakai-navy'
                 )}
               >
                 {t(link.key)}
@@ -110,27 +127,45 @@ const SiteHeader = () => {
           })}
         </nav>
         <div className='hidden items-center gap-5 lg:flex'>
-          <LanguageSwitcher locale={locale} label={t('language')} />
+          <LanguageSwitcher
+            locale={locale}
+            label={t('language')}
+            tone={onHome ? 'paper' : 'navy'}
+          />
           <Link
-            href='/contact'
+            href='/#contacto'
             prefetch={false}
-            className='merakai-action bg-merakai-orange px-4 py-2 font-heading font-semibold text-merakai-navy text-sm'
+            className='merakai-action inline-flex items-center gap-2 bg-merakai-orange px-4 py-2 font-heading font-semibold text-merakai-navy text-sm'
           >
             {t('talk')}
+            {onHome ? <span aria-hidden>→</span> : null}
           </Link>
         </div>
         <button
           ref={buttonRef}
           type='button'
-          className='inline-flex h-11 w-11 items-center justify-center border border-merakai-navy/15 lg:hidden'
+          className={cn(
+            'inline-flex h-11 w-11 items-center justify-center border lg:hidden',
+            onHome ? 'border-white/20' : 'border-merakai-navy/15'
+          )}
           aria-expanded={open}
           aria-controls={titleId}
           onClick={() => setOpen((value) => !value)}
         >
           <span className='sr-only'>{open ? t('close') : t('open')}</span>
           <span className='flex w-4 flex-col gap-1.5' aria-hidden>
-            <span className='h-px bg-merakai-navy' />
-            <span className='h-px bg-merakai-navy' />
+            <span
+              className={cn(
+                'h-px',
+                onHome ? 'bg-merakai-paper' : 'bg-merakai-navy'
+              )}
+            />
+            <span
+              className={cn(
+                'h-px',
+                onHome ? 'bg-merakai-paper' : 'bg-merakai-navy'
+              )}
+            />
             <span className='h-px w-3 bg-merakai-orange' />
           </span>
         </button>
@@ -139,7 +174,12 @@ const SiteHeader = () => {
         <div
           ref={panelRef}
           id={titleId}
-          className='border-merakai-navy/10 border-t bg-merakai-paper px-5 py-6 lg:hidden'
+          className={cn(
+            'max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t px-5 py-6 lg:hidden',
+            onHome
+              ? 'border-white/10 bg-merakai-navy text-merakai-paper'
+              : 'border-merakai-navy/10 bg-merakai-paper'
+          )}
         >
           <nav className='flex flex-col gap-4' aria-label={t('menu')}>
             {links.map((link) => (
@@ -148,19 +188,26 @@ const SiteHeader = () => {
                 href={link.href}
                 prefetch={false}
                 className='font-heading text-3xl tracking-[-0.03em]'
+                onClick={() => setOpen(false)}
               >
                 {t(link.key)}
               </Link>
             ))}
           </nav>
           <div className='mt-8 flex items-center justify-between'>
-            <LanguageSwitcher locale={locale} label={t('language')} />
+            <LanguageSwitcher
+              locale={locale}
+              label={t('language')}
+              tone={onHome ? 'paper' : 'navy'}
+            />
             <Link
-              href='/contact'
+              href='/#contacto'
               prefetch={false}
-              className='merakai-action bg-merakai-orange px-4 py-2 font-heading font-semibold text-merakai-navy text-sm'
+              className='merakai-action inline-flex items-center gap-2 bg-merakai-orange px-4 py-2 font-heading font-semibold text-merakai-navy text-sm'
+              onClick={() => setOpen(false)}
             >
               {t('talk')}
+              {onHome ? <span aria-hidden>→</span> : null}
             </Link>
           </div>
         </div>
@@ -171,10 +218,12 @@ const SiteHeader = () => {
 
 const LanguageSwitcher = ({
   locale,
-  label
+  label,
+  tone = 'navy'
 }: {
   locale: string
   label: string
+  tone?: 'navy' | 'paper'
 }) => {
   const pathname = usePathname()
 
@@ -192,7 +241,13 @@ const LanguageSwitcher = ({
           hrefLang={item}
           aria-current={item === locale ? 'true' : undefined}
           className={cn(
-            item === locale ? 'text-merakai-navy' : 'text-merakai-navy/45'
+            tone === 'paper'
+              ? item === locale
+                ? 'text-merakai-paper'
+                : 'text-merakai-paper/45'
+              : item === locale
+                ? 'text-merakai-navy'
+                : 'text-merakai-navy/45'
           )}
         >
           {item}

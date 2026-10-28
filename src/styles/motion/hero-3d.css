@@ -1,0 +1,446 @@
+.home-hero {
+  overflow: hidden;
+  background: radial-gradient(circle at 72% 46%, #194959 0%, #092e40 27%, #061a27 62%);
+  isolation: isolate;
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  background-image:
+    linear-gradient(#a3c3c01b 1px, transparent 1px),
+    linear-gradient(90deg, #a3c3c01b 1px, transparent 1px);
+  background-size: 58px 58px;
+  transform: perspective(600px) rotateX(28deg) scale(1.3);
+  transform-origin: 50% 60%;
+  mask-image: linear-gradient(to right, transparent, #fff 80%);
+  pointer-events: none;
+}
+
+.home-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 76% 52%, transparent 0 23%, #04151f5e 62%, transparent 75%);
+}
+
+.home-hero .visual {
+  position: relative;
+  height: 37rem;
+  max-width: 44rem;
+  margin-inline: auto;
+  perspective: 1000px;
+  overflow: visible;
+}
+
+.scene-3d {
+  --rx: -9deg;
+  --ry: -21deg;
+  position: absolute;
+  inset: -20px -8% -20px -5%;
+  perspective: 1050px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.scene-3d::after {
+  content: '';
+  position: absolute;
+  width: 480px;
+  height: 90px;
+  left: 22%;
+  bottom: 7%;
+  border-radius: 50%;
+  background: #000b;
+  filter: blur(32px);
+  transform: rotate(-12deg);
+}
+
+.scene-ambient {
+  position: absolute;
+  width: 720px;
+  height: 720px;
+  left: 0;
+  top: -50px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1e81925e, transparent 55%);
+  filter: blur(22px);
+}
+
+.spatial-grid {
+  position: absolute;
+  inset: 70px -40px;
+  background-image:
+    linear-gradient(#a3c3c01b 1px, transparent 1px),
+    linear-gradient(90deg, #a3c3c01b 1px, transparent 1px);
+  background-size: 45px 45px;
+  transform: rotateX(66deg) rotateZ(-25deg) translateY(100px);
+  mask-image: radial-gradient(ellipse, #fff, transparent 68%);
+}
+
+.dimensional-object {
+  position: absolute;
+  top: 17%;
+  left: 17%;
+  width: 375px;
+  height: 375px;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(-7deg);
+  filter: drop-shadow(35px 55px 32px #001019c9);
+  transition: transform 0.45s ease-out;
+  animation: object-float 6s ease-in-out infinite alternate;
+}
+
+.cube-face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ffffff59;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.cube-front {
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  border-radius: 38px;
+  background: linear-gradient(140deg, #175771ed, #0a3147fa 62%, #061e2d);
+  box-shadow:
+    inset 4px 5px 10px #ffffff35,
+    inset -8px -15px 25px #0006,
+    0 0 70px #f57f2017;
+  transform: translateZ(56px);
+}
+
+.cube-front::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border: 1px solid #ffffff18;
+  border-radius: 25px;
+}
+
+.cube-front::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: -130px;
+  width: 700px;
+  height: 100px;
+  background: linear-gradient(#ffffff2f, transparent);
+  filter: blur(20px);
+  transform: rotate(-35deg);
+}
+
+.cube-back {
+  border-radius: 35px;
+  background: #0b3e51;
+  transform: rotateY(180deg) translateZ(56px);
+}
+
+.cube-left,
+.cube-right {
+  width: 112px;
+  border-radius: 20px;
+}
+
+.cube-left {
+  left: -56px;
+  background: linear-gradient(90deg, #041623, #0d394d);
+  transform: rotateY(-90deg);
+}
+
+.cube-right {
+  left: 319px;
+  background: linear-gradient(90deg, #0d536a, #092b40);
+  transform: rotateY(90deg);
+}
+
+.cube-top,
+.cube-bottom {
+  height: 112px;
+  border-radius: 20px;
+}
+
+.cube-top {
+  top: -56px;
+  background: linear-gradient(145deg, #29758a, #10374b);
+  transform: rotateX(90deg);
+}
+
+.cube-bottom {
+  top: 319px;
+  background: #041b29;
+  transform: rotateX(-90deg);
+}
+
+.cube-mark {
+  width: 285px;
+  max-width: 86%;
+  height: auto;
+  filter: drop-shadow(10px 20px 8px #0005);
+  transform: translateZ(28px);
+}
+
+.orbital {
+  position: absolute;
+  top: 5%;
+  left: 2%;
+  width: 590px;
+  height: 590px;
+  border: 1px solid #8cc8cc2a;
+  border-radius: 50%;
+  box-shadow:
+    0 0 30px #8cc8cc0c,
+    inset 0 0 30px #8cc8cc14;
+  transform: rotateX(70deg) rotateZ(-25deg);
+  animation: orbit-turn 25s linear infinite;
+}
+
+.orbital.two {
+  top: 17%;
+  left: 13%;
+  width: 450px;
+  height: 450px;
+  border-color: #f57f2049;
+  transform: rotateY(66deg) rotateZ(35deg);
+  animation-duration: 30s;
+  animation-direction: reverse;
+}
+
+.spatial-sphere {
+  position: absolute;
+  top: 13%;
+  right: 2%;
+  width: 126px;
+  height: 126px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 28% 23%, #ffe4b9 0, #ffac48 17%, #f57f20 48%, #a8400a 83%);
+  box-shadow:
+    inset -15px -20px 20px #6f23065e,
+    18px 22px 35px #0009,
+    0 0 65px #f57f2059;
+  animation: sphere-float 5s ease-in-out infinite alternate;
+}
+
+.spatial-sphere::after {
+  content: '';
+  position: absolute;
+  inset: 18%;
+  border: 1px solid #ffffff52;
+  border-radius: 50%;
+  transform: rotateX(65deg) rotateZ(40deg);
+}
+
+.spatial-glass {
+  position: absolute;
+  bottom: 14%;
+  left: 0;
+  width: 190px;
+  padding: 21px 24px;
+  border: 1px solid #c7e9ed57;
+  border-radius: 18px;
+  background: linear-gradient(130deg, #c4e7e821, #2b667640);
+  box-shadow:
+    0 18px 50px #0008,
+    inset 0 1px #ffffff39;
+  transform: rotate(-9deg);
+  backdrop-filter: blur(16px);
+  animation: glass-float 7s ease-in-out infinite alternate;
+}
+
+.spatial-glass small {
+  display: block;
+  color: #a0c7cc;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.spatial-glass strong {
+  display: block;
+  margin: 8px 0 4px;
+  color: white;
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.07em;
+}
+
+.spatial-glass span {
+  color: #d4e6e8;
+  font-size: 11px;
+}
+
+.spatial-pill {
+  position: absolute;
+  right: 0;
+  bottom: 8%;
+  padding: 13px 24px;
+  border-radius: 100px;
+  background: #f57f20;
+  color: #082b40;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  box-shadow: 0 12px 35px #00141e8a;
+  transform: rotate(9deg);
+}
+
+@keyframes object-float {
+  from {
+    translate: 0 -13px;
+  }
+
+  to {
+    translate: 0 16px;
+  }
+}
+
+@keyframes sphere-float {
+  to {
+    transform: translate3d(-15px, 25px, 0);
+  }
+}
+
+@keyframes glass-float {
+  to {
+    transform: translate3d(8px, -15px, 0) rotate(-4deg);
+  }
+}
+
+@keyframes orbit-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (max-width: 1100px) {
+  .scene-3d {
+    top: 0;
+    left: calc(50% - 290px);
+    width: 600px;
+    height: 500px;
+  }
+
+  .dimensional-object {
+    top: 15%;
+    left: 24%;
+    width: 300px;
+    height: 300px;
+  }
+
+  .cube-front {
+    transform: translateZ(45px);
+  }
+
+  .cube-back {
+    transform: rotateY(180deg) translateZ(45px);
+  }
+
+  .cube-left,
+  .cube-right {
+    width: 90px;
+  }
+
+  .cube-left {
+    left: -45px;
+  }
+
+  .cube-right {
+    left: 255px;
+  }
+
+  .cube-top,
+  .cube-bottom {
+    height: 90px;
+  }
+
+  .cube-top {
+    top: -45px;
+  }
+
+  .cube-bottom {
+    top: 255px;
+  }
+
+  .cube-mark {
+    width: 230px;
+  }
+
+  .orbital {
+    width: 475px;
+    height: 475px;
+  }
+
+  .orbital.two {
+    width: 360px;
+    height: 360px;
+  }
+
+  .spatial-glass {
+    bottom: 8%;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-hero .visual {
+    height: 380px;
+    margin-top: 15px;
+  }
+
+  .scene-3d {
+    top: 15px;
+    left: calc(50% - 300px);
+    transform: scale(0.73);
+    transform-origin: top center;
+  }
+
+  .spatial-glass {
+    bottom: 0;
+    left: 4%;
+  }
+
+  .spatial-sphere {
+    top: 7%;
+    right: 7%;
+  }
+
+  .spatial-pill {
+    right: 0;
+    bottom: 15%;
+  }
+}
+
+.home-still .dimensional-object {
+  animation: object-float 6s ease-in-out infinite alternate !important;
+}
+
+.home-still .orbital {
+  animation: orbit-turn 25s linear infinite !important;
+}
+
+.home-still .orbital.two {
+  animation-duration: 30s !important;
+  animation-direction: reverse !important;
+}
+
+.home-still .spatial-sphere {
+  animation: sphere-float 5s ease-in-out infinite alternate !important;
+}
+
+.home-still .spatial-glass {
+  animation: glass-float 7s ease-in-out infinite alternate !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-still .dimensional-object,
+  .home-still .orbital,
+  .home-still .spatial-sphere,
+  .home-still .spatial-glass {
+    animation: none !important;
+    transition: none !important;
+  }
+}
